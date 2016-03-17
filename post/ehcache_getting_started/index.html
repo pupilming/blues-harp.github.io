@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.15" />
+
+  <title>Ehcache--Getting Started &middot; </title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="http://blues-harp.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="http://blues-harp.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="http://blues-harp.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="" href="http://blues-harp.github.io/index.xml" />
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="http://blues-harp.github.io/img/favicon.ico" type="image/x-icon" />
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://blues-harp.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://blues-harp.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://blues-harp.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://blues-harp.github.io/topics/"><i class='fa fa-list fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://blues-harp.github.io/tags/"><i class='fa fa-list fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://blues-harp.github.io/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </li>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/p/1005052703596503/home" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/blues-harp" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div class="pure-g">
+  <div class="small-print pure-u-1 pure-u-md-1-1">
+    <small>&copy; 2016. All rights reserved.</small>
+  </div>
+  <div class="small-print pure-u-1 pure-u-md-1-1">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>Ehcache--Getting Started</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>2016-03-03 20:23</time>
+  </div>
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-folder fa-fw"></i>
+    
+      <a class="post-taxonomy-topic" href="http://blues-harp.github.io/topics/translation">Translation</a>
+    
+  </div>
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="http://blues-harp.github.io/tags/ehcahce">ehcahce</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  
+
+<p><a href="http://www.ehcache.org/documentation/3.0/getting-started.html">原文网址</a></p>
+
+<h1 id="getting-started:93ef77c13d8af1a8fd2b0531f9d2770e">Getting Started</h1>
+
+<h2 id="纯java配置方式:93ef77c13d8af1a8fd2b0531f9d2770e">纯java配置方式</h2>
+
+<h3 id="managed-cache:93ef77c13d8af1a8fd2b0531f9d2770e">Managed cache</h3>
+
+<pre><code class="language-java">CacheManager cacheManager
+    = CacheManagerBuilder.newCacheManagerBuilder()  （1） 
+    .withCache(&quot;preConfigured&quot;,
+        CacheConfigurationBuilder.newCacheConfigurationBuilder()
+            .buildConfig(Long.class, String.class))   （2）
+    .build(false); （3）
+cacheManager.init(); （4）
+
+Cache&lt;Long, String&gt; preConfigured =
+    cacheManager.getCache(&quot;preConfigured&quot;, Long.class, String.class); （5）
+
+Cache&lt;Long, String&gt; myCache = cacheManager.createCache(&quot;myCache&quot;, （6）
+    CacheConfigurationBuilder.newCacheConfigurationBuilder().buildConfig(Long.class, String.class));
+
+myCache.put(1L, &quot;da one!&quot;); （7）
+String value = myCache.get(1L);（8） 
+
+cacheManager.removeCache(&quot;preConfigured&quot;); （9）
+
+cacheManager.close(); （10）
+</code></pre>
+
+<p>（1）静态方法 <code>CacheManagerBuilder.newCacheManagerBuilder()</code>  返回一个CacheManagerBuilder实例；<br />
+（2）当我们构建一个CacheManager时，用这个构造器注册一个事先配置好的Cache。第一个参数是一个Cache的别名，我们可以通过别名从CacheManager获取一个Cache。第二个参数<code>org.ehcache.config.CacheConfiguration</code>用于配置这个Cache。我们用<code>org.ehcache.config.CacheConfigurationBuilder</code>的静态方法<code>.newCacheConfigurationBuilder()</code>创建一个默认的配置；
+（3）最后，调用<code>.build(bool)</code>方法返回一个我们可以使用的完全实例化CacheManager；<br />
+（4）在我们使用CacheManager之前，我们需要调用它init()方法初始化。当然，也可以直接在上一步中<code>.build(bool)</code>传入true，进行初始化；<br />
+（5）我们可以通过别名 <code>preConfigured</code> 获取一个之前配置好的Cache。为了类型安全，最好传入 key 和 value 的类型。如果传入的类型和之前配置的类型不一致，CacheManager 可以尽早抛出 <code>ClassCastException</code> 异常. 这个可以确保我们获取的Cache不会被一个随机的类型污染；<br />
+（6）这个 CacheManager 也可以用于创建新的 Cache 。就像步骤（2）中一样，我们需要传入一个别名和 <code>CacheConfiguration</code>。我们也可以通过<code>CacheManager.getCache</code> API 获取这个已经实例化的而且完全初始化的Cache;<br />
+（7）现在，我们就可以使用这个新添加的Cache用于存储&hellip;<br />
+（8）获取数据。<br />
+（9）我们也可以通过<code>cacheManager.removeCache()</code>方法删除一个给定的Cache。调用这个方法后， CacheManager 不仅仅会删除对这个Cache的引用，而且会关闭这个Cache，这个Cache就会释放它占有的所有资源（比如内存）。其他对这个Cache的引用都会失效。<br />
+（10）调用<code>cacheManager.close()</code>方法会释放这个CacheManager占有的所有资源（内存，线程&hellip;.），而且会close调它当前管理的所有Cache。</p>
+
+<h3 id="useer-managed-cache:93ef77c13d8af1a8fd2b0531f9d2770e">Useer Managed cache</h3>
+
+<pre><code class="language-java">UserManagedCache&lt;Long, String&gt; userManagedCache =
+    UserManagedCacheBuilder.newUserManagedCacheBuilder(Long.class, String.class)
+        .build(false);  （1）
+userManagedCache.init(); （2）
+
+userManagedCache.put(1L, &quot;da one!&quot;); （3）
+
+userManagedCache.close(); （4）
+</code></pre>
+
+<p>（1）Ehcache 3.0有一个新的特性用于创建一个UserManagedCache 实例，也即一个不是被CacheManager管理的Cache，一样的你可以通过传入一个<code>true</code>初始化它。<br />
+（2）或者传入一个<code>false</code>，然后在你要使用它之前，调用<code>UserManagedCache.init()</code>初始化它。<br />
+（3）你可以像一个managed cache一样使用它。<br />
+（4）同样的，一个UserManagedCache也需要你显示的调用<code>UserManagedCache.close()</code>关闭它。如果你同时也使用managed caches，在调用 <code>CacheManager.close()</code> 方法的时候，不会影响user managed cache。<br />
+&gt; 这个特性的详细介绍可以参考文档<a href="user_manager_cache.md">用户管理的Cache文档</a></p>
+
+<h3 id="分层:93ef77c13d8af1a8fd2b0531f9d2770e">分层</h3>
+
+<h4 id="堆外内存-off-heap:93ef77c13d8af1a8fd2b0531f9d2770e">堆外内存（Off-heap）</h4>
+
+<pre><code class="language-java">CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().withCache(&quot;tieredCache&quot;,
+    CacheConfigurationBuilder.newCacheConfigurationBuilder()
+        .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder()
+            .heap(10, EntryUnit.ENTRIES)
+            .offheap(10, MemoryUnit.MB)) （1）
+        .buildConfig(Long.class, String.class)).build(true);
+
+cacheManager.close();
+</code></pre>
+
+<p>（1）如果你想使用堆外内存，你必须定义好资源池，指定要分配的内存大小。
+&gt; 注意，不要忘记根据你想分配的堆外内存大小，定义java参数 <code>-XX:MaxDirectMemorySize</code></p>
+
+<h4 id="磁盘持久化:93ef77c13d8af1a8fd2b0531f9d2770e">磁盘持久化</h4>
+
+<pre><code class="language-java">PersistentCacheManager persistentCacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .with(new CacheManagerPersistenceConfiguration(new File(getStoragePath(), &quot;myData&quot;)))  （1）
+    .withCache(&quot;persistent-cache&quot;, CacheConfigurationBuilder.newCacheConfigurationBuilder()
+        .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder()
+            .heap(10, EntryUnit.ENTRIES)
+            .disk(10L, MemoryUnit.MB, true)) （2）
+        .buildConfig(Long.class, String.class))
+    .build(true);
+
+persistentCacheManager.close();
+</code></pre>
+
+<p>（1）如果你想用磁盘存储（比如持久化Cache实例），你需要先在 <code>CacheManager</code>中注册一个本地持久化服务 <code>LocalPersistenceService</code>。你也可以通过静态方法 <code>CacheManagerBuilder.persistence(String)</code> 设置持久化数据到磁盘的位置。<br />
+（2）为这个磁盘定义一个资源池（resource pool ）。</p>
+
+<h3 id="三层结构-three-tiers:93ef77c13d8af1a8fd2b0531f9d2770e">三层结构（Three tiers）</h3>
+
+<pre><code class="language-java">PersistentCacheManager persistentCacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .with(new CacheManagerPersistenceConfiguration(new File(getStoragePath(), &quot;myData&quot;))) （1）
+    .withCache(&quot;threeTieredCache&quot;,
+        CacheConfigurationBuilder.newCacheConfigurationBuilder()
+            .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder()
+                    .heap(10, EntryUnit.ENTRIES) （2）
+                    .offheap(1, MemoryUnit.MB) （3）
+                    .disk(20, MemoryUnit.MB) （4）
+            )
+            .buildConfig(Long.class, String.class)).build(true);
+
+persistentCacheManager.close();
+</code></pre>
+
+<p>（1）如果你想用磁盘存储（比如持久化Cache实例），你需要先在 <code>CacheManager</code>中注册一个本地持久化服务 <code>LocalPersistenceService</code>。你也可以通过静态方法 <code>CacheManagerBuilder.persistence(String)</code> 设置持久化数据到磁盘的位置。<br />
+（2）为堆内存（heap）定义一个资源池（resource pool ）.<br />
+（3）为堆外内存（off-heap）定义一个资源池.<br />
+（4）为磁盘（disk）定义一个资源池。</p>
+
+<h3 id="跟新资源池-resourcepools:93ef77c13d8af1a8fd2b0531f9d2770e">跟新资源池（ResourcePools）</h3>
+
+<pre><code class="language-java">ResourcePools pools = ResourcePoolsBuilder.newResourcePoolsBuilder().heap(20L, EntryUnit.ENTRIES).build(); （1）
+cache.getRuntimeConfiguration().updateResourcePools(pools); （2）
+assertThat(cache.getRuntimeConfiguration().getResourcePools()
+    .getPoolForResource(ResourceType.Core.HEAP).getSize(), is(20L));
+</code></pre>
+
+<p>（1）你需要使用 <code>ResourcePoolsBuilder</code>，设置好所需的资源大小，创建一个新的资源池对象。然后使用下面的方法触发更新。<br />
+（2）使用 <code>RuntimeConfiguration</code>的 <code>updateResourcePools(ResourcePools)</code>方法跟新资源池（ResourcePools）的容量。传入上一步创建好的<code>ResourcePools</code>对象。
+&gt; 在不久的将来，<code>updateResourcePools()</code>将会只支持更新使用<code>EntryUnit.ENTRIES</code>作为单位的资源池</p>
+
+<h2 id="综合:93ef77c13d8af1a8fd2b0531f9d2770e">综合</h2>
+
+<h3 id="cache事件监听器:93ef77c13d8af1a8fd2b0531f9d2770e">Cache事件监听器</h3>
+
+<pre><code class="language-java">CacheEventListenerConfigurationBuilder cacheEventListenerConfiguration = CacheEventListenerConfigurationBuilder
+    .newEventListenerConfiguration(ListenerObject.class, EventType.CREATED, EventType.UPDATED) （1）
+    .unordered().asynchronous();（2） 
+
+final CacheManager manager = CacheManagerBuilder.newCacheManagerBuilder()
+    .withCache(&quot;foo&quot;,
+        CacheConfigurationBuilder.newCacheConfigurationBuilder()
+            .add(cacheEventListenerConfiguration) （3）
+            .buildConfig(String.class, String.class)).build(true);
+
+final Cache&lt;String, String&gt; cache = manager.getCache(&quot;foo&quot;, String.class, String.class);
+cache.put(&quot;Hello&quot;, &quot;World&quot;); （4）
+cache.put(&quot;Hello&quot;, &quot;Everyone&quot;); （5）
+cache.remove(&quot;Hello&quot;); （6）
+</code></pre>
+
+<p>（1）用指定的监听器类和监听的事件类型构造一个 <code>CacheEventListenerConfiguration</code><br />
+（2）显示的指明发送模式-默认是异步，无序的<br />
+（3）把上面创建的监听器配置到缓存配置中<br />
+（4）在插入数据的时候，会触发监听器<br />
+（5）更新操作同样的也会触发<br />
+（6）但是删除操作不会触发（译者注：我们只配置了监听Create事件和Update事件）</p>
+
+<p>用户执行不同方法时触发的Create，Update，Remove事件如下表所列<br />
+回收事件（Eviction）和过期事件（expiration）既可以被内部处理触发，也可以在用户操作相关数据的时候触发。</p>
+
+<p>表1.
+TODO</p>
+
+<h3 id="直写模式缓存-write-through-cache:93ef77c13d8af1a8fd2b0531f9d2770e">直写模式缓存（Write-Through Cache）</h3>
+
+<pre><code class="language-java">CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().build(true);
+
+Class&lt;CacheLoaderWriter&lt;?, ?&gt;&gt; klazz = (Class&lt;CacheLoaderWriter&lt;?, ?&gt;&gt;)  (Class) (SampleLoaderWriter.class);
+
+final Cache&lt;Long, String&gt; writeThroughCache = cacheManager.createCache(&quot;writeThroughCache&quot;,
+    CacheConfigurationBuilder.newCacheConfigurationBuilder()
+        .add(new DefaultCacheLoaderWriterConfiguration(klazz, singletonMap(41L, &quot;zero&quot;))) （1）
+        .buildConfig(Long.class, String.class));
+
+assertThat(writeThroughCache.get(41L), is(&quot;zero&quot;));
+writeThroughCache.put(42L, &quot;one&quot;);
+assertThat(writeThroughCache.get(42L), equalTo(&quot;one&quot;));
+
+cacheManager.close();
+</code></pre>
+
+<p>（1）如果你想使用直读（read-through）/直写（write-through）的缓存模式，你必须实现 <code>CacheLoaderWriter</code>，然后通过使用<code>DefaultCacheLoaderWriterConfiguration</code>添加具体的类型到缓存注册<code>CacheLoaderWriterFactory</code>服务。</p>
+
+<h3 id="事后写入模式混存-write-behind-cache:93ef77c13d8af1a8fd2b0531f9d2770e">事后写入模式混存（Write-Behind Cache）</h3>
+
+<pre><code class="language-java">CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().build(true);
+
+Class&lt;CacheLoaderWriter&lt;?, ?&gt;&gt; klazz = (Class&lt;CacheLoaderWriter&lt;?, ?&gt;&gt;) (Class) (SampleLoaderWriter.class);
+
+final Cache&lt;Long, String&gt; writeBehindCache = cacheManager.createCache(&quot;writeBehindCache&quot;,
+    CacheConfigurationBuilder.newCacheConfigurationBuilder()
+        .add(new DefaultCacheLoaderWriterConfiguration(klazz, singletonMap(41L, &quot;zero&quot;)))       （1）
+        .add(WriteBehindConfigurationBuilder            （2）
+            .newBatchedWriteBehindConfiguration(1, TimeUnit.SECONDS, 3)     （3）
+            .queueSize(3)     （4）
+            .concurrencyLevel(1)      （5）
+            .enableCoalescing())      （6）
+        .buildConfig(Long.class, String.class));
+
+assertThat(writeBehindCache.get(41L), is(&quot;zero&quot;));
+writeBehindCache.put(42L, &quot;one&quot;);
+writeBehindCache.put(43L, &quot;two&quot;);
+writeBehindCache.put(42L, &quot;This goes for the record&quot;);
+assertThat(writeBehindCache.get(42L), equalTo(&quot;This goes for the record&quot;));
+
+cacheManager.close();
+</code></pre>
+
+<p>（1）一个事后写入模式的缓存。你必须实现<code>CacheLoaderWriter</code>然后用<code>DefaultCacheLoaderWriterConfiguration</code>注册。<br />
+（2）此外，你还需通过添加<code>WriteBehindConfiguration</code>注册<code>WriteBehindDecoratorLoaderWriterProvider</code>服务到缓存。<br />
+（3）构建一个事后写入模式的队列用于批量的跟新数据到底层资源。<br />
+（4）设置队列的最大长度。<br />
+（5）定义队列的并发程度。在一个时刻会有很多写入线程异步地跟新数据到底层资源。<br />
+（6）开启写入时候的合并操作，这个可以确保只把对同一个key最近跟新写入到底层资源。</p>
+
+<h3 id="序列化器-serializers:93ef77c13d8af1a8fd2b0531f9d2770e">序列化器（Serializers）</h3>
+
+<p>序列化主要用于Ehcache把数据存储到非堆内存。所以不管用户使用几级缓存，在不同级之间转移数据的时候都有可能发生序列化和反序列化。<br />
+Ehcache提供默认的序列化器可以序列化任何<code>Serializable</code>类型。<br />
+所以当你的key或者value使用标准的<code>Serializable</code>类型时，你不用配置额外的序列化器，应为内置的序列化器会处理这些。</p>
+
+<h3 id="定制的序列化器-custom-serializers:93ef77c13d8af1a8fd2b0531f9d2770e">定制的序列化器（Custom serializers）</h3>
+
+<p>你可以注册自己定制的序列化器到Cache manager中。<br />
+如果你为一种给定的类型定制一个序列化器，那么在对这个给定的类型进行序列化/反序列化的时候都会使用这个定制的序列化器。</p>
+
+<p>你也可以配置一个序列化器到Cache manager中，应用于所有的caches；</p>
+
+<pre><code class="language-java">CacheConfiguration&lt;Long, String&gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder
+        .newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).offheap(1, MemoryUnit.MB).build())
+    .buildConfig(Long.class, String.class);
+
+DefaultSerializationProviderConfiguration defaultSerializationProviderFactoryConfiguration =
+    new DefaultSerializationProviderConfiguration()
+        .addSerializerFor(String.class, StringSerializer.class);  （1）
+CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .withCache(&quot;cache&quot;, cacheConfiguration)
+    .using(defaultSerializationProviderFactoryConfiguration)   （2）
+    .build(true);
+
+Cache&lt;Long, String&gt; cache = cacheManager.getCache(&quot;cache&quot;, Long.class, String.class);
+
+cache.put(1L, &quot;one&quot;);
+assertThat(cache.get(1L), equalTo(&quot;one&quot;));
+
+cacheManager.close();
+</code></pre>
+
+<p>（1）配置一个全局的序列化器集合。每一个序列化器都和一种类型对应，这个Cache定义的Key和Value类型用于从这个集合中选择最佳的序列化器。每一个Cache在初始化的时候都会为Key和Value选择一个序列化器。如果没有找到也不会抛出错误。序列化器的选择有两个准则：a.优先使用问这个类型明确配置的序列化器 b.否则使用从list中找到的第一个类型兼容的序列化器。默认情况下，针对<code>java.io.Serializable.</code>类型已经配置了一个序列化器。<br />
+（2）不要忘记把定制的序列化器配置到<code>CacheManagerBuilder</code>中。</p>
+
+<p>或者你也可以直接给一个Cache指定一个序列化器：</p>
+
+<pre><code class="language-java">CacheConfiguration&lt;Long, String&gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .add(new DefaultSerializerConfiguration&lt;Long&gt;(LongSerializer.class,
+        SerializerConfiguration.Type.KEY))   （1）
+    .add(new DefaultSerializerConfiguration&lt;CharSequence&gt;(CharSequenceSerializer.class,
+        SerializerConfiguration.Type.VALUE))  （2）
+    .buildConfig(Long.class, String.class);
+
+CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .withCache(&quot;cache&quot;, cacheConfiguration)
+    .build(true);
+
+Cache&lt;Long, String&gt; cache = cacheManager.getCache(&quot;cache&quot;, Long.class, String.class);
+
+cache.put(1L, &quot;one&quot;);
+assertThat(cache.get(1L), equalTo(&quot;one&quot;));
+
+cacheManager.close();
+</code></pre>
+
+<p>（1）配置key的序列化器<br />
+（2）配置value的序列化器</p>
+
+<p>每一个Cache的Kye和value都会单独的创建序列化对象。也即，就算你为多个Cache配置了相同的序列化器，每一个Cache还是会单独创建一个序列化器对象。<br />
+在Cache manager这一层配置的序列化器也是一样。<br />
+同样的，就算是同一个Cache，你为Key和Value配置了相同的序列化器，也会创建不同的序列化器对象。</p>
+
+<h5 id="序列化器的实现:93ef77c13d8af1a8fd2b0531f9d2770e">序列化器的实现：</h5>
+
+<p>在实现一个<code>org.ehcache.spi.serialization.Serializer</code>的时候，显然你必须遵守接口约定。<br />
+此外，如果你使用Ehcache提供的<code>DefaultSerializationProvider</code>服务，大部分用户都会这么干，除非他们自己实现<code>SerializationProvider</code>服务，下面有些隐性的约定：<br />
+* 用于短暂缓存（transient caches）的序列化器的实现必须有一个以<code>ClassLoader</code>为参数的 <code>public</code>构造方法.
+* 用于持久化缓存（persistent caches）的序列化器的实现必须有一个两参数的构造方法，一个参数是<code>ClassLoader</code>，另一个参数是<code>FileBasedPersistenceContext</code>。</p>
+
+<p>你可以随意的再写很多构造方法，但是Ehcache只会用上面的两个构造方法初始化他们的序列化器。短暂缓存（transient caches）会使用只有一个参数的构造方法，持久化缓存（persistent caches）会使用有两个参数的构造方法。尽管用户被强制在他们的序列化器的实现上有其中一个或两个方法，这些参数的用法还是取决于用户。用户可以选择完全忽略这些参数，但是这两个构造方法必须存在。现在，即使构造方法参数的用法没有强制指定，但是还是强烈推荐使用<code>FileBasedPersistenceContext</code>持久化序列化器的状态，如果有的话。</p>
+
+<h3 id="用copiers实现值存储-store-by-value-的cache:93ef77c13d8af1a8fd2b0531f9d2770e">用copiers实现值存储（Store-By-Value）的Cache</h3>
+
+<p>JSR-107规定Cache应该支持值存储（Store-By-Value）机制也就是Cache中存储key和value的一份新的值拷贝。Ehcache在使用堆内存的时候默认支持引用存储（store-by-reference），用户要想使用值存储（Store-By-Value）机制必须显示的配置。</p>
+
+<p>在对key和value进行复制操作的时候，用户可以指定习惯的复制逻辑（custom copy logic ）。<br />
+如果用户对读写有不同的需求可以通过直接实现<code>Copier&lt;T&gt;</code>接口创建一个copier。<br />
+另一个选择是继承抽象的helper类<code>ReadWriteCopier&lt;T&gt;</code>，它有一个抽象方法<code>copy(T obj)</code>会被现<code>Copier&lt;T&gt;</code>的方法调用。<br />
+如果没有提供任何的copiers，这个Cache就会是一个引用存储（store-by-reference）的缓存。</p>
+
+<pre><code class="language-java">CacheConfiguration&lt;Description, Person&gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .add(new DefaultCopierConfiguration&lt;Description&gt;(DescriptionCopier.class,
+        CopierConfiguration.Type.KEY))  （1）
+    .add(new DefaultCopierConfiguration&lt;Person&gt;(PersonCopier.class,
+        CopierConfiguration.Type.VALUE))  （2）
+    .buildConfig(Description.class, Person.class);
+
+CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .withCache(&quot;cache&quot;, cacheConfiguration)
+    .build(true);
+
+Cache&lt;Description, Person&gt; cache = cacheManager.getCache(&quot;cache&quot;, Description.class, Person.class);
+
+Description desc = new Description(1234, &quot;foo&quot;);
+Person person = new Person(&quot;Bar&quot;, 24);
+cache.put(desc, person);
+assertThat(cache.get(desc), equalTo(person));
+
+cacheManager.close();
+</code></pre>
+
+<p>（1）配置key的copier<br />
+（2）配置value的coiper</p>
+
+<p>如果用户不想自己实现一个coiper但是却想用值存储（store-by-value）模式，Ehcache提供了一个<code>SerializingCopier</code>用户可以直接使用。<code>SerializingCopier</code>内部用序列化的方式实现拷贝。为了进行序列化，你必须给key和value配置序列化器。可以按照下面的方式用<code>SerializingCopier</code>配置Cache：</p>
+
+<pre><code class="language-java">CacheConfiguration&lt;Long, Person&gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .add(new DefaultCopierConfiguration&lt;Person&gt;((Class)SerializingCopier.class,  （1）   
+        CopierConfiguration.Type.VALUE))
+    .buildConfig(Long.class, Person.class);
+</code></pre>
+
+<p>（1）你所需要做的就是像配置你自己实现的coiper一样使用<code>SerializingCopier</code>，就这么简单。</p>
+
+<p>看完上面几个例子你会发现我们都没有为key配置copiers,这个对于Ehcache是没什么问题的。如果没有配置coiper，我们会切回到使用引用存储（store-by-reference）模式。所以铜鼓上面的配置，你得到的Cache的key是引用存储，value是值存储。</p>
+
+<p>你也可以在Cache manager这一层配置默认的copiers，这样你就不用每次创建Cache的时候，都配置一次copier。你可以通过下面的方式配置：</p>
+
+<pre><code class="language-java">CacheConfiguration&lt;Description, Person&gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .buildConfig(Description.class, Person.class);
+
+CacheConfiguration&lt;Long, Person&gt; anotherCacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .buildConfig(Long.class, Person.class);
+
+DefaultCopyProviderConfiguration defaultCopierConfig = new DefaultCopyProviderConfiguration()
+    .addCopierFor(Description.class, DescriptionCopier.class)   （1）
+    .addCopierFor(Person.class, (Class) SerializingCopier.class);
+
+CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .using(defaultCopierConfig)   （2）
+    .withCache(&quot;cache&quot;, cacheConfiguration)   （3）
+    .withCache(&quot;anotherCache&quot;, anotherCacheConfiguration)   （4）
+    .build(true);
+
+Cache&lt;Description, Person&gt; cache = cacheManager.getCache(&quot;cache&quot;, Description.class, Person.class);
+Cache&lt;Long, Person&gt; anotherCache = cacheManager.getCache(&quot;anotherCache&quot;, Long.class, Person.class);
+
+Description desc = new Description(1234, &quot;foo&quot;);
+Person person = new Person(&quot;Bar&quot;, 24);
+cache.put(desc, person);
+assertThat(cache.get(desc), equalTo(person));
+
+anotherCache.put(1l, person);
+assertThat(anotherCache.get(1l), equalTo(person));
+
+cacheManager.close();
+</code></pre>
+
+<p>（1）创建一个<code>DefaultCopyProviderConfiguration</code>然后增加所需的默认copiers.<br />
+ （2）在<code>CacheManagerBuilder</code>中使用相同的配置<br />
+ （3）在Cache manager层配置的<code>DescriptionCopier</code>和<code>PersonCopier</code>将会作用于这个Cache。<br />
+ （4）在Cache manager层配置的<code>PersonCopier</code>将会作用于这个Cache。</p>
+
+<p>上面的例子示范了如何在Cache manager层和Cache层配置不同服务。<br />
+ 这些例子没有一个是真正的创建copiers实例，序列化器实例等。我们提供的这些用于配置服务的class类型和它们的实例化都是Ehcache内部完成的。</p>
+
+<p>下面是一个示范配置copier服务例子。其他的服务也可以用类似的方式配置：</p>
+
+<pre><code class="language-java"> CacheConfiguration&lt;Description, Person&gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .add(new DefaultCopierConfiguration&lt;Description&gt;(DescriptionCopier.class,  （1）
+        CopierConfiguration.Type.KEY))
+    .add(new DefaultCopierConfiguration&lt;Person&gt;(new PersonCopier(),  （2）
+        CopierConfiguration.Type.VALUE))
+    .buildConfig(Description.class, Person.class);
+</code></pre>
+
+<p>（1）用class类型配置<code>DescriptionCopier</code>copier（老的方式）
+ （2）用实际的对象配置copier：<code>PersonCopier</code>在这里进行实例化。</p>
+
+<blockquote>
+<p>我们还是推荐用前面介绍的用class类型配置服务，因为这个可以确保不同的Cache是使用服务的不同对象。如果你不是足够细心的话，在你的应用中共享服务对象可能会带来致命的影响。后面一种方式，用服务的对象配置服务就是为共享同一个服务对象打开了一扇门，</p>
+</blockquote>
+
+<p>现在你应该熟悉了如何用实际的对象或者class类型配置服务，比如loader-writers，序列化器等等。在Cache不再使用这些服务对象的时候，把他们清理调是一个很明智做法。你可以通过让这些类<code>Closeable</code>，然后在close方法中释放掉资源做到。Ehcache会确保在这个Cache被删除或者Cache manager被关闭的时候调用close方法。</p>
+
+<p>### 没有一些XML文件怎么能叫java</p>
+
+<p>你可以通过XML文件的方式配置<code>CacheManager</code> ：</p>
+
+<pre><code class="language-xml">  &lt;cache alias=&quot;foo&quot;&gt;  （1）
+    &lt;key-type&gt;java.lang.String&lt;/key-type&gt;  （2）
+    &lt;resources&gt;
+      &lt;heap size=&quot;2000&quot; unit=&quot;entries&quot;/&gt;  （3）
+      &lt;offheap size=&quot;500&quot; unit=&quot;mb&quot;/&gt;   （4）
+    &lt;/resources&gt;
+  &lt;/cache&gt;
+
+  &lt;cache-template name=&quot;myDefaults&quot;&gt;   （5）
+    &lt;key-type&gt;java.lang.Long&lt;/key-type&gt;
+    &lt;value-type&gt;java.lang.String&lt;/value-type&gt;
+    &lt;heap size=&quot;200&quot; unit=&quot;entries&quot;/&gt;
+  &lt;/cache-template&gt;
+
+  &lt;cache alias=&quot;bar&quot; uses-template=&quot;myDefaults&quot;&gt;   （6）
+    &lt;key-type&gt;java.lang.Number&lt;/key-type&gt;
+  &lt;/cache&gt;
+
+  &lt;cache alias=&quot;simpleCache&quot; uses-template=&quot;myDefaults&quot; /&gt;  （7）
+</code></pre>
+
+<p>（1）定义一个<code>Cache</code>的别名叫<code>foo</code><br />
+ （2）<code>foo</code>的key被定义为<code>String</code>类型；由于没有定义value的类型，value的类型默认为<code>Object</code>。<br />
+ （3）<code>foo</code>被定义为最多存储2000个entry在堆内存里<br />
+ （4）<code>foo</code>被定义为在它开始丢弃entry之前，最多能在非堆内存里占有500Mb。<br />
+ （5）<code>&lt;cache-template&gt;</code>元素可以让你创建一个抽象的配置，然后可以被后面的<code>&lt;cache&gt;</code>可以继承.<br />
+ （6）<code>bar</code>就是一个Cache，它使用一个叫做<code>myDefaults</code>的<code>&lt;cache-template&gt;</code>,并且覆盖他的<code>key-type</code>定义。<br />
+ （7）<code>simpleCache</code>是另外一个Cache。它直接使用<code>myDefaults</code>的配置作为它所有的配置。</p>
+
+<p>如果想了解更多的XML配置格式，你可以参考<a href="ehcache_xml_config.md">xml配置文档</a>.</p>
+
+<p>为了解析XML配置，你可以使用<code>XmlConfiguration</code>类型：</p>
+
+<pre><code class="language-java">final URL myUrl = this.getClass().getResource(&quot;/my-config.xml&quot;);  （1）
+Configuration xmlConfig = new XmlConfiguration(myUrl);  （2）
+CacheManager myCacheManager = CacheManagerBuilder.newCacheManager(xmlConfig);  （3）
+</code></pre>
+
+<p>（1）获取你的XML文件的URL<br />
+（2）传入XML文件的url，实例化一个<code>XmlConfiguration</code><br />
+（3）使用<code>org.ehcache.CacheManagerBuilder.newCacheManager(org.ehcache.config.Configuration)</code>可以让你使用<code>XmlConfiguration</code>中的配置实例化一个<code>CacheManager</code>对象。</p>
+
+<p># 目前的开发情况
+ 如果想获得开发者信息，你可以访问<a href="https://github.com/ehcache/ehcache3/wiki">Ehcache3.0项目GitHub的wiki</a></p>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1 pure-u-md-1-2">
+    
+    <nav class="prev">
+      <a href="http://blues-harp.github.io/post/ehcache_xml_config/"><i class="fa fa-arrow-circle-left fa-fw fa-lg"></i>Ehcache--XML Configuration</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1 pure-u-md-1-2">
+    
+    <nav class="next">
+      <a href="http://blues-harp.github.io/post/ehcache_offheap/">Ehcache--Offheap<i class="fa fa-arrow-circle-right fa-fw fa-lg"></i></a>
+    </nav>
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="http://blues-harp.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+

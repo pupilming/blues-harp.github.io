@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.15" />
+
+  <title>shell编程--统计代码行数 &middot; </title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="http://blues-harp.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="http://blues-harp.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="http://blues-harp.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="" href="http://blues-harp.github.io/index.xml" />
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="http://blues-harp.github.io/img/favicon.ico" type="image/x-icon" />
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://blues-harp.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://blues-harp.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://blues-harp.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://blues-harp.github.io/topics/"><i class='fa fa-list fa-fw'></i>Topics</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="http://blues-harp.github.io/tags/"><i class='fa fa-list fa-fw'></i>Tags</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://blues-harp.github.io/index.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </li>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://weibo.com/p/1005052703596503/home" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/blues-harp" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div class="pure-g">
+  <div class="small-print pure-u-1 pure-u-md-1-1">
+    <small>&copy; 2016. All rights reserved.</small>
+  </div>
+  <div class="small-print pure-u-1 pure-u-md-1-1">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>shell编程--统计代码行数</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>2016-03-03 15:58</time>
+  </div>
+
+  
+
+  
+  
+  
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="http://blues-harp.github.io/tags/shell">Shell</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  
+
+<h1 id="shell编程-统计代码行数:1b0e5426c0cb7b47b7e22c71e688f998">shell编程&ndash;统计代码行数</h1>
+
+<h2 id="引言:1b0e5426c0cb7b47b7e22c71e688f998">引言：</h2>
+
+<p>平时我们都会遇到一个问题，写完一个项目后，想统计一下总的代码量，当代码文件很多时，一个个点开代码文件，然后把代码行数加起来是一件很费神的事。shell可以用短短几行代码就搞定这个问题。</p>
+
+<h2 id="1-shell源码-code-linage-sh:1b0e5426c0cb7b47b7e22c71e688f998">1. shell源码（code_linage.sh）：</h2>
+
+<pre><code class="language-shell">#!/bin/bash
+
+if [ $# -eq 1 ] &amp;&amp; [ -d $1 ] 
+then
+    find $1 -type f -name &quot;*.java&quot; -print0 | xargs -0 wc -l
+else
+    echo 'wrong parameter'
+fi
+</code></pre>
+
+<h2 id="2-shell代码分析:1b0e5426c0cb7b47b7e22c71e688f998">2. shell代码分析：</h2>
+
+<p>这个代码的功能是：统计一个文件夹中java代码的行数</p>
+
+<ul>
+<li><p>第1行：虽然开头是#，但是这句并不是注释，它的含义是用<code>/bin/bash</code>来解释这一段脚本。</p></li>
+
+<li><p>第3行：作用是判断是否只有一个参数，而且参数代表的是一个目录。$# 表示参数个数，要等于1；-d $1 是判断第一个参数是不是表示一个目录。</p></li>
+
+<li><p>第5行：是这段代码的核心部分。这一行可以分成两部分，管道命令“|” 前面的<code>find</code>命令功能是查找出 $1（也即第一个参数）目录下所有的java文件。        -print0 表示将这些找到的文件名用 \0 分隔；“|” 后面的命令功能是将统计每一个文件的代码行数。xargs可以将标准输入数据转换成命令行参数，传给<code>wc</code>命令。-0 表示以 \0 为分隔符， wc -l 就是代码统计行数。</p></li>
+</ul>
+
+<h3 id="3-运行效果:1b0e5426c0cb7b47b7e22c71e688f998">3. 运行效果</h3>
+
+<p><img src="http://blues-harp.github.io/picture/shell_code_linage.png" alt="shell_code_linage" /></p>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1 pure-u-md-1-2">
+    
+  </div>
+  <div class="pure-u-1 pure-u-md-1-2">
+    
+    <nav class="next">
+      <a href="http://blues-harp.github.io/post/ehcache_xml_config/">Ehcache--XML Configuration<i class="fa fa-arrow-circle-right fa-fw fa-lg"></i></a>
+    </nav>
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="http://blues-harp.github.io/js/ui.js"></script>
+
+
+
+
+</body>
+</html>
+
