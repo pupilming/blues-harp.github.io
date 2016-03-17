@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shell on My New Hugo Site</title>
+    <link>http://blues-harp.github.io/tags/shell/</link>
+    <description>Recent content in Shell on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016. All rights reserved.</copyright>
+    <lastBuildDate>Thu, 17 Mar 2016 15:58:19 +0800</lastBuildDate>
+    <atom:link href="http://blues-harp.github.io/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>shell编程--统计代码行数</title>
+      <link>http://blues-harp.github.io/post/shell_code_linage/</link>
+      <pubDate>Thu, 17 Mar 2016 15:58:19 +0800</pubDate>
+      
+      <guid>http://blues-harp.github.io/post/shell_code_linage/</guid>
+      <description>
+
+&lt;h1 id=&#34;shell编程-统计代码行数:1b0e5426c0cb7b47b7e22c71e688f998&#34;&gt;shell编程&amp;ndash;统计代码行数&lt;/h1&gt;
+
+&lt;h3 id=&#34;引:1b0e5426c0cb7b47b7e22c71e688f998&#34;&gt;引：&lt;/h3&gt;
+
+&lt;p&gt;平时我们都会遇到一个问题，写完一个项目后，想统计一下总的代码量，当代码文件很多时，一个个点开代码文件，然后把代码行数加起来是一件很费神的事。shell可以用短短几行代码就搞定这个问题。&lt;/p&gt;
+
+&lt;h3 id=&#34;1-shell源码-code-linage-sh:1b0e5426c0cb7b47b7e22c71e688f998&#34;&gt;1. shell源码（code_linage.sh）：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;#!/bin/bash
+
+if [ $# -eq 1 ] &amp;amp;&amp;amp; [ -d $1 ] 
+then
+    find $1 -type f -name &amp;quot;*.java&amp;quot; -print0 | xargs -0 wc -l
+else
+    echo &#39;wrong parameter&#39;
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;2-shell代码分析:1b0e5426c0cb7b47b7e22c71e688f998&#34;&gt;2. shell代码分析：&lt;/h3&gt;
+
+&lt;p&gt;这个代码的功能是：统计一个文件夹中java代码的行数&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;第1行：虽然开头是#，但是这句并不是注释，它的含义是用&lt;code&gt;/bin/bash&lt;/code&gt;来解释这一段脚本。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;第3行：作用是判断是否只有一个参数，而且参数代表的是一个目录。$# 表示参数个数，要等于1；-d $1 是判断第一个参数是不是表示一个目录。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;第5行：是这段代码的核心部分。这一行可以分成两部分，管道命令“|” 前面的&lt;code&gt;find&lt;/code&gt;命令功能是查找出 $1（也即第一个参数）目录下所有的java文件。        -print0 表示将这些找到的文件名用 \0 分隔；“|” 后面的命令功能是将统计每一个文件的代码行数。xargs可以将标准输入数据转换成命令行参数，传给&lt;code&gt;wc&lt;/code&gt;命令。-0 表示以 \0 为分隔符， wc -l 就是代码统计行数。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>shell编程--统计代码行数</title>
+      <link>http://blues-harp.github.io/shell_code_linage/</link>
+      <pubDate>Thu, 17 Mar 2016 15:58:19 +0800</pubDate>
+      
+      <guid>http://blues-harp.github.io/shell_code_linage/</guid>
+      <description>
+
+&lt;h1 id=&#34;shell编程-统计代码行数:1b0e5426c0cb7b47b7e22c71e688f998&#34;&gt;shell编程&amp;ndash;统计代码行数&lt;/h1&gt;
+
+&lt;h3 id=&#34;引:1b0e5426c0cb7b47b7e22c71e688f998&#34;&gt;引：&lt;/h3&gt;
+
+&lt;p&gt;平时我们都会遇到一个问题，写完一个项目后，想统计一下总的代码量，当代码文件很多时，一个个点开代码文件，然后把代码行数加起来是一件很费神的事。shell可以用短短几行代码就搞定这个问题。&lt;/p&gt;
+
+&lt;h3 id=&#34;1-shell源码-code-linage-sh:1b0e5426c0cb7b47b7e22c71e688f998&#34;&gt;1. shell源码（code_linage.sh）：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;#!/bin/bash
+
+if [ $# -eq 1 ] &amp;amp;&amp;amp; [ -d $1 ] 
+then
+    find $1 -type f -name &amp;quot;*.java&amp;quot; -print0 | xargs -0 wc -l
+else
+    echo &#39;wrong parameter&#39;
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;2-shell代码分析:1b0e5426c0cb7b47b7e22c71e688f998&#34;&gt;2. shell代码分析：&lt;/h3&gt;
+
+&lt;p&gt;这个代码的功能是：统计一个文件夹中java代码的行数&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;第1行：虽然开头是#，但是这句并不是注释，它的含义是用&lt;code&gt;/bin/bash&lt;/code&gt;来解释这一段脚本。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;第3行：作用是判断是否只有一个参数，而且参数代表的是一个目录。$# 表示参数个数，要等于1；-d $1 是判断第一个参数是不是表示一个目录。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;第5行：是这段代码的核心部分。这一行可以分成两部分，管道命令“|” 前面的&lt;code&gt;find&lt;/code&gt;命令功能是查找出 $1（也即第一个参数）目录下所有的java文件。        -print0 表示将这些找到的文件名用 \0 分隔；“|” 后面的命令功能是将统计每一个文件的代码行数。xargs可以将标准输入数据转换成命令行参数，传给&lt;code&gt;wc&lt;/code&gt;命令。-0 表示以 \0 为分隔符， wc -l 就是代码统计行数。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
