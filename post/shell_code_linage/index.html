@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="generator" content="Hugo 0.15" />
 
-  <title>My First Blog &middot; My New Hugo Site</title>
+  <title>shell编程--统计代码行数 &middot; My New Hugo Site</title>
 
   
   
@@ -175,7 +175,7 @@
 
 
 <div class="header">
-  <h1>My First Blog</h1>
+  <h1>shell编程--统计代码行数</h1>
   <h2></h2>
 </div>
 <div class="content">
@@ -184,11 +184,14 @@
 
   <div>
     <i class="fa fa-calendar fa-fw"></i>
-    <time>16 Mar 2016, 21:47</time>
+    <time>17 Mar 2016, 15:58</time>
   </div>
 
   
 
+  
+  
+  
   
 
   
@@ -197,7 +200,7 @@
   <div>
     <i class="fa fa-tags fa-fw"></i>
     
-      <a class="post-taxonomy-tag" href="http://blues-harp.github.io/tags/taga">taga</a>
+      <a class="post-taxonomy-tag" href="http://blues-harp.github.io/tags/shell">Shell</a>
     
   </div>
   
@@ -207,14 +210,35 @@
 
   
 
-<h3 id="hello:e8fb9c67eba912c72729806db31eaa1b">hello</h3>
+<h1 id="shell编程-统计代码行数:1b0e5426c0cb7b47b7e22c71e688f998">shell编程&ndash;统计代码行数</h1>
 
-<p>aa<br />
-bb
-cc
-sadg</p>
+<h3 id="引:1b0e5426c0cb7b47b7e22c71e688f998">引：</h3>
 
-<h3 id="7-更详细语法说明:e8fb9c67eba912c72729806db31eaa1b">7. 更详细语法说明</h3>
+<p>平时我们都会遇到一个问题，写完一个项目后，想统计一下总的代码量，当代码文件很多时，一个个点开代码文件，然后把代码行数加起来是一件很费神的事。shell可以用短短几行代码就搞定这个问题。</p>
+
+<h3 id="1-shell源码-code-linage-sh:1b0e5426c0cb7b47b7e22c71e688f998">1. shell源码（code_linage.sh）：</h3>
+
+<pre><code class="language-shell">#!/bin/bash
+
+if [ $# -eq 1 ] &amp;&amp; [ -d $1 ] 
+then
+    find $1 -type f -name &quot;*.java&quot; -print0 | xargs -0 wc -l
+else
+    echo 'wrong parameter'
+fi
+</code></pre>
+
+<h3 id="2-shell代码分析:1b0e5426c0cb7b47b7e22c71e688f998">2. shell代码分析：</h3>
+
+<p>这个代码的功能是：统计一个文件夹中java代码的行数</p>
+
+<ul>
+<li><p>第1行：虽然开头是#，但是这句并不是注释，它的含义是用<code>/bin/bash</code>来解释这一段脚本。</p></li>
+
+<li><p>第3行：作用是判断是否只有一个参数，而且参数代表的是一个目录。$# 表示参数个数，要等于1；-d $1 是判断第一个参数是不是表示一个目录。</p></li>
+
+<li><p>第5行：是这段代码的核心部分。这一行可以分成两部分，管道命令“|” 前面的<code>find</code>命令功能是查找出 $1（也即第一个参数）目录下所有的java文件。        -print0 表示将这些找到的文件名用 \0 分隔；“|” 后面的命令功能是将统计每一个文件的代码行数。xargs可以将标准输入数据转换成命令行参数，传给<code>wc</code>命令。-0 表示以 \0 为分隔符， wc -l 就是代码统计行数。</p></li>
+</ul>
 
 
   
@@ -222,15 +246,11 @@ sadg</p>
   <div class="pure-u-1 pure-u-md-1-2">
     
     <nav class="prev">
-      <a href="http://blues-harp.github.io/post/md5_algorithm/"><i class="fa fa-arrow-circle-left fa-fw fa-lg"></i>MD5算法--网盘秒传</a>
+      <a href="http://blues-harp.github.io/post/second/"><i class="fa fa-arrow-circle-left fa-fw fa-lg"></i>second</a>
     </nav>
     
   </div>
   <div class="pure-u-1 pure-u-md-1-2">
-    
-    <nav class="next">
-      <a href="http://blues-harp.github.io/post/second/">second<i class="fa fa-arrow-circle-right fa-fw fa-lg"></i></a>
-    </nav>
     
   </div>
 </div>
