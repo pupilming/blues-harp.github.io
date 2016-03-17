@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Translation on </title>
+    <link>http://blues-harp.github.io/topics/translation/</link>
+    <description>Recent content in Translation on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>&amp;copy; 2016. All rights reserved.</copyright>
+    <lastBuildDate>Thu, 17 Mar 2016 20:34:47 +0800</lastBuildDate>
+    <atom:link href="http://blues-harp.github.io/topics/translation/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Ehcahce--Store By Value VS Store By Reference</title>
+      <link>http://blues-harp.github.io/post/store_by_value_VS_store_by_reference/</link>
+      <pubDate>Thu, 17 Mar 2016 20:34:47 +0800</pubDate>
+      
+      <guid>http://blues-harp.github.io/post/store_by_value_VS_store_by_reference/</guid>
+      <description>
+
+&lt;h1 id=&#34;值存储-store-by-value-和引用存储-store-by-reference-对比:d4c856edf1e17bc48ab05b8f4f933300&#34;&gt;值存储（store-by-value）和引用存储(store-by-reference)对比&lt;/h1&gt;
+
+&lt;p&gt;这个概念一般在Cache系统中出现，大家可以类比值传递和引用传递来理解。当我们向Cache中&lt;code&gt;put(key,value)&lt;/code&gt;时，我们可以把key和value的引用存储到Cache中，也可以把key和value的值复制一份存储到Cache中。这两种方式各有优缺点。&lt;/p&gt;
+
+&lt;h2 id=&#34;值存储-store-by-value:d4c856edf1e17bc48ab05b8f4f933300&#34;&gt;值存储（store-by-value）&lt;/h2&gt;
+
+&lt;p&gt;当我们向Cache中&lt;code&gt;put(key,value)&lt;/code&gt;时，每次复制一份key和value的值然后存储到Cache中，从Cache中&lt;code&gt;get(key)&lt;/code&gt;时，同样的复制一份Cache中的key和value的值。缺点，Cache中存储的是key和value的值，会占用更多的内存，每次put和get操作都需要进行一次值的拷贝；优点，由于Cache中存储的是新拷贝的值，所以应用对key和value的修改不会影响Cache。&lt;/p&gt;
+
+&lt;h2 id=&#34;引用存储-store-by-reference:d4c856edf1e17bc48ab05b8f4f933300&#34;&gt;引用存储（store-by-reference）&lt;/h2&gt;
+
+&lt;p&gt;当我们向Cache中&lt;code&gt;put(key,value)&lt;/code&gt;时，只是简单把key和value的引用存储到Cache中，从Cache中get(key)时，也是返回key和value的引用。缺点，由于Cache中存储的是key和value的引用，应用对key和value的修改会影响Cache（应用中的key和value的引用和Cache中的引用都是指向同一份内存）；优点，Cache中只需要存储引用，占有更少的内存，存取操作更简单快速。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ehcahce--On Heap VS Off Heap Memory Usage</title>
+      <link>http://blues-harp.github.io/post/on_heap_vs_off_heap_memory_usage/</link>
+      <pubDate>Thu, 17 Mar 2016 20:31:20 +0800</pubDate>
+      
+      <guid>http://blues-harp.github.io/post/on_heap_vs_off_heap_memory_usage/</guid>
+      <description>
+
+&lt;p&gt;翻译文章：&lt;a href=&#34;http://vanillajava.blogspot.com/2014/12/on-heap-vs-off-heap-memory-usage.html&#34;&gt;On heap vs off heap memory usage&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;堆内存-vs-堆外内存:e38583e61b27a2b77086ac0936a80814&#34;&gt;堆内存 VS 堆外内存&lt;/h1&gt;
+
+&lt;h2 id=&#34;概述:e38583e61b27a2b77086ac0936a80814&#34;&gt;概述&lt;/h2&gt;
+
+&lt;p&gt;我最近被问到在java中使用堆外内存（off heap）有什么好处。其他遇到同样问题的人可能也会对下面的回答感兴趣。&lt;/p&gt;
+
+&lt;p&gt;堆外内存（off heap）并没有什么特别的。线程栈，应用代码，NIO缓冲区就是它的全部。实际上，在C和C++中，你只能使用没有被管理的内存，并没有什么堆内存的概念（译者注：java中的堆内存其实就是被jvm管理的内存，堆外内存就是没有被jvm管理的内存）。使用被管理的内存或者叫“堆内存”是java语言的一个特性。注意：java并不是唯一一个有这种特性的语言。&lt;/p&gt;
+
+&lt;h2 id=&#34;new-object-vs-对象池-vs-非堆内存:e38583e61b27a2b77086ac0936a80814&#34;&gt;new Object() vs 对象池 vs 非堆内存&lt;/h2&gt;
+
+&lt;h3 id=&#34;new-object:e38583e61b27a2b77086ac0936a80814&#34;&gt;new Object()&lt;/h3&gt;
+
+&lt;p&gt;在java 5.0之前，用对象池（object pools）很常见。创建对象的成本仍然很高。然而，在java 5.0之后，对象的分配和垃圾回收的成本变得很低，而且开发者也逐渐发现，不用对象池，而只是在需要使用对象的时候new一个可以简化他们的代码而且也能获得很高的性能。在java 5.0之前，几乎所有的对象池，甚至是用 &lt;code&gt;objects&lt;/code&gt;提供的线程池都可以提升性能。java 5.0之后，只有一些构建成本比较高的对象，比如线程，sock，数据库连接等使用对象池才会有明显的性能提高。&lt;/p&gt;
+
+&lt;h3 id=&#34;对象池-object-pools:e38583e61b27a2b77086ac0936a80814&#34;&gt;对象池（Object pools）&lt;/h3&gt;
+
+&lt;p&gt;显然，在低延迟的空间，回收可变的对象可以减少CPU Cache的压力，从而提高性能。这些对象必须有简单的生命周期和简单的结构，通过使用它们，你可以看到在性能和抖动方面有极大的改善。&lt;br /&gt;
+另外一个使用对象池有重要意义的地方是从许多重复的对象加载大量的数据。由于极大的减少了使用的内存和GC需要管理的对象数量，你可以看到GC的次数减少了，吞吐量增加了。&lt;br /&gt;
+这些对象池设计得比同步的 &lt;code&gt;HashMap&lt;/code&gt;更加轻量，所以仍然是有用的。&lt;/p&gt;
+
+&lt;h3 id=&#34;非堆内存使用:e38583e61b27a2b77086ac0936a80814&#34;&gt;非堆内存使用&lt;/h3&gt;
+
+&lt;p&gt;使用非堆内存和对象池唯一的相同点就是它们都可以减少GC停顿（GC pauses）。对象池更适合于短暂可变的对象，创建成本很高的对象，和有很多复制操作的生命周期长的不可变的对象。中等生命周期，或者复杂的对象更适合让GC去处理。然而中长生命周期的可变对象可以通过堆外内存用多种方式解决。&lt;/p&gt;
+
+&lt;p&gt;非堆内存提供：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;占有大内存比如超过1TB和比内存还大时的可扩展性。&lt;/li&gt;
+&lt;li&gt;对GC停顿次数抽象的影响（Notional impact on GC pause times）。&lt;/li&gt;
+&lt;li&gt;进程之间的共享，减少JVM之间的复制，使JVM的分隔更简单。&lt;/li&gt;
+&lt;li&gt;Persistence for faster restarts or replying of production data in test.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;非堆内存的使用可以让你在设计系统的时候有更多的选择。这个最大的提升不是在性能上而是决定论（determinism）。&lt;/p&gt;
+
+&lt;h3 id=&#34;非堆内存和测试:e38583e61b27a2b77086ac0936a80814&#34;&gt;非堆内存和测试&lt;/h3&gt;
+
+&lt;p&gt;高性能计算的一大挑战之一是减少晦涩的bug以及如何证明你已经修了它们。持续不断的存储你所有的输入事件和数据到非堆内存可能让你的关键系统进入一系列的复杂状态机。（或者简单的例子，就一个状态机）通过这样的方式你可以在测试很生成环境获得可再现的表现和性能。&lt;/p&gt;
+
+&lt;h3 id=&#34;由于进入了更底层-这样岂不是失去了-一次编译-到处运行:e38583e61b27a2b77086ac0936a80814&#34;&gt;由于进入了更底层，这样岂不是失去了“一次编译，到处运行”？&lt;/h3&gt;
+
+&lt;p&gt;在某种程度上而言是的，但是远没到你想象的程度。当你运行在更接近处理器的时候，你会更加依赖于处理器或者操作系统的表现。幸运的是大部分系统用的是AMD/Intel处理器，甚至ARM处理器在底层保证上面也变得越来越兼容。在操作系统上面也有不动点，而且比起Windows系统，它们的技术趋向于更适合Linux系统。然而，如果你开发环境是MacOSX或者Windows系统，但是生成环境是Linux，你更不应该有任何问题。This is what we do at Higher Frequency Trading.&lt;/p&gt;
+
+&lt;h3 id=&#34;使用非堆内存会带来什么新的问题呢:e38583e61b27a2b77086ac0936a80814&#34;&gt;使用非堆内存会带来什么新的问题呢？&lt;/h3&gt;
+
+&lt;p&gt;没有免费的好处，使用非堆内存也一样。非堆内存最大的问题是数据结构会变得不自然（less natural）。你要么使用可以直接映射到非堆内存的简单数据结构，要么在使用复杂数据结构的时候进行序列化和反序列化存入非堆内存。显然使用序列化会有头疼的地方和对性能的影响。序列化会导致使用非堆内存对象比使用堆内存对象更慢。&lt;br /&gt;
+在金融的世界，&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ehcache--Offheap</title>
+      <link>http://blues-harp.github.io/post/ehcache_offheap/</link>
+      <pubDate>Thu, 17 Mar 2016 20:28:07 +0800</pubDate>
+      
+      <guid>http://blues-harp.github.io/post/ehcache_offheap/</guid>
+      <description>
+
+&lt;p&gt;原文地址: &lt;a href=&#34;http://blog.terracotta.org/2015/04/13/ehcache-storage-tier-model-with-offheap&#34;&gt;Ehcache Storage Tier Model With Offheap&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;ehcache-存储分层结构之非堆内存-offheap:9bd01808b6dacb2f32af36315de55d68&#34;&gt;Ehcache 存储分层结构之非堆内存（Offheap）&lt;/h1&gt;
+
+&lt;p&gt;Ehcache使用不同类型的存储（堆内存，非堆内存，磁盘，集群）构成一个层次模型。为了对热点数据提供最好的存取性能，Ehcache会根据需要“机智地”复制热点数据到不同层。&lt;/p&gt;
+
+&lt;h2 id=&#34;什么是ehcache的非堆内存-offheap:9bd01808b6dacb2f32af36315de55d68&#34;&gt;什么是Ehcache的非堆内存（Offheap）&lt;/h2&gt;
+
+&lt;p&gt;&amp;ldquo;Offheap&amp;rdquo;是Terracotta提供的缓存分层结构中的一个术语，指那些用于存储java对象但是不被java GC管理的内存。为了理解为什么这个很有用而且很重要，我们需要简单的讨论下Java和内存。&lt;/p&gt;
+
+&lt;h3 id=&#34;被管理的内存-managed-memory:9bd01808b6dacb2f32af36315de55d68&#34;&gt;被管理的内存（Managed Memory）&lt;/h3&gt;
+
+&lt;p&gt;就像Python，Ruby等语言一样，Java是一个使用被管理的内存（Managed Memory）的语言。java会一直监控着在程序执行的时候创建和使用的对象。最后在一些对象没有被引用的时候，会把它销毁，释放占有的内存给其他任务使用。这些都是JVM自动完成的，不需要开发者操心。好神奇吧！但是这些神奇是需要代价的。JVM话了相当大的时间跟踪这些对象和它们的使用，这个会使程序变慢，尤其是在你处理大量数据的时候。如果JVM处理不过来了，会触发一次full GC，这个会导致整个程序停顿几秒。在堆内存占有较小的时候，比如1G左右，程序可以顺畅的运行，但是一旦数据过大就会出问题。所以如果你想在cache中存储大量的数据，传统的java堆内存就搞不定了。&lt;/p&gt;
+
+&lt;h3 id=&#34;没有被管理的内存-unmanaged-memory:9bd01808b6dacb2f32af36315de55d68&#34;&gt;没有被管理的内存（Unmanaged Memory）&lt;/h3&gt;
+
+&lt;p&gt;java也提供分配大块的内存，也就是我们说的非堆内存（Offheap）。非堆内存必须被开发者分配，被垃圾收集器（ garbage collector）释放。非堆内存的好处是你可以申请大块的内存，但是分片的使用；GC会把每一个非堆内存buffer当作一个巨大的对象，这样就更方便管理。&lt;/p&gt;
+
+&lt;p&gt;如果你可以分配20G的非堆内存，然后存储几千个小对象，就可以大大减轻GC的负担，这样你就可以存储大量数据在内存里了。 双赢！&lt;/p&gt;
+
+&lt;p&gt;Ehcache的Offheap是缓存分层结构中的一层，可以让你实现在非堆内存中存储对象。这个可以实现让一个cache中存储非常大的数据量&amp;ndash;想想上千G甚至兆兆字节的数据存储在一个单独的JVM中是不是很屌。&lt;/p&gt;
+
+&lt;p&gt;不用写特殊的代码，&lt;/p&gt;
+
+&lt;p&gt;不用学新的 API&lt;/p&gt;
+
+&lt;p&gt;你只需要在Ehcache中配置下，指明一个最大的容量，然后像之前一样使用这个Cache，就可以使用非堆内存了。但是变得更快，更大。&lt;/p&gt;
+
+&lt;h2 id=&#34;配置:9bd01808b6dacb2f32af36315de55d68&#34;&gt;配置&lt;/h2&gt;
+
+&lt;p&gt;一般情况下，通过ehcache.xml你就可以配置Ehcache的堆内存。这里有两种cache级别的指示可以配置非堆内存的使用，尽管大部分人只对在ehcache.xml中设置&lt;code&gt;maxBytesLocalOffheap&lt;/code&gt;感兴趣：&lt;br /&gt;
+&lt;code&gt;maxBytesLocalOffheap&lt;/code&gt;:&lt;br /&gt;
+设置cache中可以使用的非堆内存的大小，会预备好。
+&amp;gt;这个设置会把&lt;code&gt;overflowToOffheap&lt;/code&gt;设为&lt;code&gt;true&lt;/code&gt;。这个表明我们可以使用非堆内存。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;注意了，在使用非堆内存的时候，我们建议&lt;code&gt;maxEntriesLocalHeap&lt;/code&gt;至少设置为100个元素，否则性能会严重降低，而且也会打warning日志。（这是堆内存在结合非堆内存使用的时候最小的建议值）。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;非堆内存能分配的最小容量是128MB,没有最大容量的限制。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;在你的ehcache.xml文件中的&lt;code&gt;&amp;lt;cache&amp;gt;... &amp;lt;/cache&amp;gt;&lt;/code&gt; 部分，添加&lt;code&gt;&amp;lt;maxBytesLocalOffheap=”4g”&amp;gt;&lt;/code&gt;就意味着预备和使用4G的非堆内存，配置如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;cache name=&amp;quot;offheapCache&amp;quot;
+    maxEntriesLocalHeap=&amp;quot;100000&amp;quot;
+    eternal=&amp;quot;false&amp;quot;
+    timeToLiveSeconds=&amp;quot;600&amp;quot;
+    maxBytesLocalOffHeap=&amp;quot;4g&amp;quot;/&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;上面几乎就是所有的了&amp;ndash;除了一件事之外。你需要告诉JVM你需要4G的非堆内存可用。为了做到这个你需要给JVM传一个特殊的开关。如果你在非标准的java实现，这个开关可能不一样，但是大部分人会使用标准的JVM,所以配置也很简单。只需要在启动JVM的时候传进一个-XX:MaxDirectMemorySize参数，设置好充足的内存。比如上面的设置了4G非堆内存的cache，你需要传进下面的参数：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;-XX:MaxDirectmemorySize=4200M
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;现在你可以使用你的cache去存储上亿甚至十亿级别的元组，存取的速度也是内存级别的，而且不用改代码。&lt;/p&gt;
+
+&lt;h2 id=&#34;有什么可以期待的:9bd01808b6dacb2f32af36315de55d68&#34;&gt;有什么可以期待的&lt;/h2&gt;
+
+&lt;p&gt;由于存在序列化，非堆内存的访问速度比堆内存稍微慢那么一丢丢，但是比磁盘和网络快很多。此外，在Ehcache的架构中，非堆内存是Cache多层存储的一层&amp;ndash;你也可以在非堆内存之上配置一个堆内存保存哪些访问频率比较高的数据。&lt;/p&gt;
+
+&lt;p&gt;记住，缓存是Ehcache最擅长的，所以这个分层结构会像你想象的一样超级快。&lt;/p&gt;
+
+&lt;p&gt;在使用包含非堆内存的Ehcache的时候，可以保证非常快的数据访问，就是有上亿条数据在缓存里。而且，这个访问是非常可预测的，访问延时上没有大的抖动。&lt;/p&gt;
+
+&lt;h2 id=&#34;测试考验:9bd01808b6dacb2f32af36315de55d68&#34;&gt;测试考验&lt;/h2&gt;
+
+&lt;p&gt;在Ehcache中使用新的开源的OffHeap，除了技术上还有其他的好处。比如，我们的商业客户已经在Ehcache中执行上万亿次的&lt;code&gt;get()&lt;/code&gt;和&lt;code&gt;put()&lt;/code&gt;操做。&lt;/p&gt;
+
+&lt;p&gt;有这么多的商业使用，你可以想象这个Offheap的代码都是经过生成环境检验过的，在Ehcache中经过高度优化。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ehcache--Getting Started</title>
+      <link>http://blues-harp.github.io/post/ehcache_getting_started/</link>
+      <pubDate>Thu, 17 Mar 2016 20:23:41 +0800</pubDate>
+      
+      <guid>http://blues-harp.github.io/post/ehcache_getting_started/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;http://www.ehcache.org/documentation/3.0/getting-started.html&#34;&gt;原文网址&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;getting-started:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;Getting Started&lt;/h1&gt;
+
+&lt;h2 id=&#34;纯java配置方式:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;纯java配置方式&lt;/h2&gt;
+
+&lt;h3 id=&#34;managed-cache:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;Managed cache&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheManager cacheManager
+    = CacheManagerBuilder.newCacheManagerBuilder()  （1） 
+    .withCache(&amp;quot;preConfigured&amp;quot;,
+        CacheConfigurationBuilder.newCacheConfigurationBuilder()
+            .buildConfig(Long.class, String.class))   （2）
+    .build(false); （3）
+cacheManager.init(); （4）
+
+Cache&amp;lt;Long, String&amp;gt; preConfigured =
+    cacheManager.getCache(&amp;quot;preConfigured&amp;quot;, Long.class, String.class); （5）
+
+Cache&amp;lt;Long, String&amp;gt; myCache = cacheManager.createCache(&amp;quot;myCache&amp;quot;, （6）
+    CacheConfigurationBuilder.newCacheConfigurationBuilder().buildConfig(Long.class, String.class));
+
+myCache.put(1L, &amp;quot;da one!&amp;quot;); （7）
+String value = myCache.get(1L);（8） 
+
+cacheManager.removeCache(&amp;quot;preConfigured&amp;quot;); （9）
+
+cacheManager.close(); （10）
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）静态方法 &lt;code&gt;CacheManagerBuilder.newCacheManagerBuilder()&lt;/code&gt;  返回一个CacheManagerBuilder实例；&lt;br /&gt;
+（2）当我们构建一个CacheManager时，用这个构造器注册一个事先配置好的Cache。第一个参数是一个Cache的别名，我们可以通过别名从CacheManager获取一个Cache。第二个参数&lt;code&gt;org.ehcache.config.CacheConfiguration&lt;/code&gt;用于配置这个Cache。我们用&lt;code&gt;org.ehcache.config.CacheConfigurationBuilder&lt;/code&gt;的静态方法&lt;code&gt;.newCacheConfigurationBuilder()&lt;/code&gt;创建一个默认的配置；
+（3）最后，调用&lt;code&gt;.build(bool)&lt;/code&gt;方法返回一个我们可以使用的完全实例化CacheManager；&lt;br /&gt;
+（4）在我们使用CacheManager之前，我们需要调用它init()方法初始化。当然，也可以直接在上一步中&lt;code&gt;.build(bool)&lt;/code&gt;传入true，进行初始化；&lt;br /&gt;
+（5）我们可以通过别名 &lt;code&gt;preConfigured&lt;/code&gt; 获取一个之前配置好的Cache。为了类型安全，最好传入 key 和 value 的类型。如果传入的类型和之前配置的类型不一致，CacheManager 可以尽早抛出 &lt;code&gt;ClassCastException&lt;/code&gt; 异常. 这个可以确保我们获取的Cache不会被一个随机的类型污染；&lt;br /&gt;
+（6）这个 CacheManager 也可以用于创建新的 Cache 。就像步骤（2）中一样，我们需要传入一个别名和 &lt;code&gt;CacheConfiguration&lt;/code&gt;。我们也可以通过&lt;code&gt;CacheManager.getCache&lt;/code&gt; API 获取这个已经实例化的而且完全初始化的Cache;&lt;br /&gt;
+（7）现在，我们就可以使用这个新添加的Cache用于存储&amp;hellip;&lt;br /&gt;
+（8）获取数据。&lt;br /&gt;
+（9）我们也可以通过&lt;code&gt;cacheManager.removeCache()&lt;/code&gt;方法删除一个给定的Cache。调用这个方法后， CacheManager 不仅仅会删除对这个Cache的引用，而且会关闭这个Cache，这个Cache就会释放它占有的所有资源（比如内存）。其他对这个Cache的引用都会失效。&lt;br /&gt;
+（10）调用&lt;code&gt;cacheManager.close()&lt;/code&gt;方法会释放这个CacheManager占有的所有资源（内存，线程&amp;hellip;.），而且会close调它当前管理的所有Cache。&lt;/p&gt;
+
+&lt;h3 id=&#34;useer-managed-cache:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;Useer Managed cache&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;UserManagedCache&amp;lt;Long, String&amp;gt; userManagedCache =
+    UserManagedCacheBuilder.newUserManagedCacheBuilder(Long.class, String.class)
+        .build(false);  （1）
+userManagedCache.init(); （2）
+
+userManagedCache.put(1L, &amp;quot;da one!&amp;quot;); （3）
+
+userManagedCache.close(); （4）
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）Ehcache 3.0有一个新的特性用于创建一个UserManagedCache 实例，也即一个不是被CacheManager管理的Cache，一样的你可以通过传入一个&lt;code&gt;true&lt;/code&gt;初始化它。&lt;br /&gt;
+（2）或者传入一个&lt;code&gt;false&lt;/code&gt;，然后在你要使用它之前，调用&lt;code&gt;UserManagedCache.init()&lt;/code&gt;初始化它。&lt;br /&gt;
+（3）你可以像一个managed cache一样使用它。&lt;br /&gt;
+（4）同样的，一个UserManagedCache也需要你显示的调用&lt;code&gt;UserManagedCache.close()&lt;/code&gt;关闭它。如果你同时也使用managed caches，在调用 &lt;code&gt;CacheManager.close()&lt;/code&gt; 方法的时候，不会影响user managed cache。&lt;br /&gt;
+&amp;gt; 这个特性的详细介绍可以参考文档&lt;a href=&#34;user_manager_cache.md&#34;&gt;用户管理的Cache文档&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;分层:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;分层&lt;/h3&gt;
+
+&lt;h4 id=&#34;堆外内存-off-heap:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;堆外内存（Off-heap）&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().withCache(&amp;quot;tieredCache&amp;quot;,
+    CacheConfigurationBuilder.newCacheConfigurationBuilder()
+        .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder()
+            .heap(10, EntryUnit.ENTRIES)
+            .offheap(10, MemoryUnit.MB)) （1）
+        .buildConfig(Long.class, String.class)).build(true);
+
+cacheManager.close();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）如果你想使用堆外内存，你必须定义好资源池，指定要分配的内存大小。
+&amp;gt; 注意，不要忘记根据你想分配的堆外内存大小，定义java参数 &lt;code&gt;-XX:MaxDirectMemorySize&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;磁盘持久化:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;磁盘持久化&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;PersistentCacheManager persistentCacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .with(new CacheManagerPersistenceConfiguration(new File(getStoragePath(), &amp;quot;myData&amp;quot;)))  （1）
+    .withCache(&amp;quot;persistent-cache&amp;quot;, CacheConfigurationBuilder.newCacheConfigurationBuilder()
+        .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder()
+            .heap(10, EntryUnit.ENTRIES)
+            .disk(10L, MemoryUnit.MB, true)) （2）
+        .buildConfig(Long.class, String.class))
+    .build(true);
+
+persistentCacheManager.close();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）如果你想用磁盘存储（比如持久化Cache实例），你需要先在 &lt;code&gt;CacheManager&lt;/code&gt;中注册一个本地持久化服务 &lt;code&gt;LocalPersistenceService&lt;/code&gt;。你也可以通过静态方法 &lt;code&gt;CacheManagerBuilder.persistence(String)&lt;/code&gt; 设置持久化数据到磁盘的位置。&lt;br /&gt;
+（2）为这个磁盘定义一个资源池（resource pool ）。&lt;/p&gt;
+
+&lt;h3 id=&#34;三层结构-three-tiers:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;三层结构（Three tiers）&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;PersistentCacheManager persistentCacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .with(new CacheManagerPersistenceConfiguration(new File(getStoragePath(), &amp;quot;myData&amp;quot;))) （1）
+    .withCache(&amp;quot;threeTieredCache&amp;quot;,
+        CacheConfigurationBuilder.newCacheConfigurationBuilder()
+            .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder()
+                    .heap(10, EntryUnit.ENTRIES) （2）
+                    .offheap(1, MemoryUnit.MB) （3）
+                    .disk(20, MemoryUnit.MB) （4）
+            )
+            .buildConfig(Long.class, String.class)).build(true);
+
+persistentCacheManager.close();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）如果你想用磁盘存储（比如持久化Cache实例），你需要先在 &lt;code&gt;CacheManager&lt;/code&gt;中注册一个本地持久化服务 &lt;code&gt;LocalPersistenceService&lt;/code&gt;。你也可以通过静态方法 &lt;code&gt;CacheManagerBuilder.persistence(String)&lt;/code&gt; 设置持久化数据到磁盘的位置。&lt;br /&gt;
+（2）为堆内存（heap）定义一个资源池（resource pool ）.&lt;br /&gt;
+（3）为堆外内存（off-heap）定义一个资源池.&lt;br /&gt;
+（4）为磁盘（disk）定义一个资源池。&lt;/p&gt;
+
+&lt;h3 id=&#34;跟新资源池-resourcepools:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;跟新资源池（ResourcePools）&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;ResourcePools pools = ResourcePoolsBuilder.newResourcePoolsBuilder().heap(20L, EntryUnit.ENTRIES).build(); （1）
+cache.getRuntimeConfiguration().updateResourcePools(pools); （2）
+assertThat(cache.getRuntimeConfiguration().getResourcePools()
+    .getPoolForResource(ResourceType.Core.HEAP).getSize(), is(20L));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）你需要使用 &lt;code&gt;ResourcePoolsBuilder&lt;/code&gt;，设置好所需的资源大小，创建一个新的资源池对象。然后使用下面的方法触发更新。&lt;br /&gt;
+（2）使用 &lt;code&gt;RuntimeConfiguration&lt;/code&gt;的 &lt;code&gt;updateResourcePools(ResourcePools)&lt;/code&gt;方法跟新资源池（ResourcePools）的容量。传入上一步创建好的&lt;code&gt;ResourcePools&lt;/code&gt;对象。
+&amp;gt; 在不久的将来，&lt;code&gt;updateResourcePools()&lt;/code&gt;将会只支持更新使用&lt;code&gt;EntryUnit.ENTRIES&lt;/code&gt;作为单位的资源池&lt;/p&gt;
+
+&lt;h2 id=&#34;综合:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;综合&lt;/h2&gt;
+
+&lt;h3 id=&#34;cache事件监听器:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;Cache事件监听器&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheEventListenerConfigurationBuilder cacheEventListenerConfiguration = CacheEventListenerConfigurationBuilder
+    .newEventListenerConfiguration(ListenerObject.class, EventType.CREATED, EventType.UPDATED) （1）
+    .unordered().asynchronous();（2） 
+
+final CacheManager manager = CacheManagerBuilder.newCacheManagerBuilder()
+    .withCache(&amp;quot;foo&amp;quot;,
+        CacheConfigurationBuilder.newCacheConfigurationBuilder()
+            .add(cacheEventListenerConfiguration) （3）
+            .buildConfig(String.class, String.class)).build(true);
+
+final Cache&amp;lt;String, String&amp;gt; cache = manager.getCache(&amp;quot;foo&amp;quot;, String.class, String.class);
+cache.put(&amp;quot;Hello&amp;quot;, &amp;quot;World&amp;quot;); （4）
+cache.put(&amp;quot;Hello&amp;quot;, &amp;quot;Everyone&amp;quot;); （5）
+cache.remove(&amp;quot;Hello&amp;quot;); （6）
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）用指定的监听器类和监听的事件类型构造一个 &lt;code&gt;CacheEventListenerConfiguration&lt;/code&gt;&lt;br /&gt;
+（2）显示的指明发送模式-默认是异步，无序的&lt;br /&gt;
+（3）把上面创建的监听器配置到缓存配置中&lt;br /&gt;
+（4）在插入数据的时候，会触发监听器&lt;br /&gt;
+（5）更新操作同样的也会触发&lt;br /&gt;
+（6）但是删除操作不会触发（译者注：我们只配置了监听Create事件和Update事件）&lt;/p&gt;
+
+&lt;p&gt;用户执行不同方法时触发的Create，Update，Remove事件如下表所列&lt;br /&gt;
+回收事件（Eviction）和过期事件（expiration）既可以被内部处理触发，也可以在用户操作相关数据的时候触发。&lt;/p&gt;
+
+&lt;p&gt;表1.
+TODO&lt;/p&gt;
+
+&lt;h3 id=&#34;直写模式缓存-write-through-cache:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;直写模式缓存（Write-Through Cache）&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().build(true);
+
+Class&amp;lt;CacheLoaderWriter&amp;lt;?, ?&amp;gt;&amp;gt; klazz = (Class&amp;lt;CacheLoaderWriter&amp;lt;?, ?&amp;gt;&amp;gt;)  (Class) (SampleLoaderWriter.class);
+
+final Cache&amp;lt;Long, String&amp;gt; writeThroughCache = cacheManager.createCache(&amp;quot;writeThroughCache&amp;quot;,
+    CacheConfigurationBuilder.newCacheConfigurationBuilder()
+        .add(new DefaultCacheLoaderWriterConfiguration(klazz, singletonMap(41L, &amp;quot;zero&amp;quot;))) （1）
+        .buildConfig(Long.class, String.class));
+
+assertThat(writeThroughCache.get(41L), is(&amp;quot;zero&amp;quot;));
+writeThroughCache.put(42L, &amp;quot;one&amp;quot;);
+assertThat(writeThroughCache.get(42L), equalTo(&amp;quot;one&amp;quot;));
+
+cacheManager.close();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）如果你想使用直读（read-through）/直写（write-through）的缓存模式，你必须实现 &lt;code&gt;CacheLoaderWriter&lt;/code&gt;，然后通过使用&lt;code&gt;DefaultCacheLoaderWriterConfiguration&lt;/code&gt;添加具体的类型到缓存注册&lt;code&gt;CacheLoaderWriterFactory&lt;/code&gt;服务。&lt;/p&gt;
+
+&lt;h3 id=&#34;事后写入模式混存-write-behind-cache:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;事后写入模式混存（Write-Behind Cache）&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder().build(true);
+
+Class&amp;lt;CacheLoaderWriter&amp;lt;?, ?&amp;gt;&amp;gt; klazz = (Class&amp;lt;CacheLoaderWriter&amp;lt;?, ?&amp;gt;&amp;gt;) (Class) (SampleLoaderWriter.class);
+
+final Cache&amp;lt;Long, String&amp;gt; writeBehindCache = cacheManager.createCache(&amp;quot;writeBehindCache&amp;quot;,
+    CacheConfigurationBuilder.newCacheConfigurationBuilder()
+        .add(new DefaultCacheLoaderWriterConfiguration(klazz, singletonMap(41L, &amp;quot;zero&amp;quot;)))       （1）
+        .add(WriteBehindConfigurationBuilder            （2）
+            .newBatchedWriteBehindConfiguration(1, TimeUnit.SECONDS, 3)     （3）
+            .queueSize(3)     （4）
+            .concurrencyLevel(1)      （5）
+            .enableCoalescing())      （6）
+        .buildConfig(Long.class, String.class));
+
+assertThat(writeBehindCache.get(41L), is(&amp;quot;zero&amp;quot;));
+writeBehindCache.put(42L, &amp;quot;one&amp;quot;);
+writeBehindCache.put(43L, &amp;quot;two&amp;quot;);
+writeBehindCache.put(42L, &amp;quot;This goes for the record&amp;quot;);
+assertThat(writeBehindCache.get(42L), equalTo(&amp;quot;This goes for the record&amp;quot;));
+
+cacheManager.close();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）一个事后写入模式的缓存。你必须实现&lt;code&gt;CacheLoaderWriter&lt;/code&gt;然后用&lt;code&gt;DefaultCacheLoaderWriterConfiguration&lt;/code&gt;注册。&lt;br /&gt;
+（2）此外，你还需通过添加&lt;code&gt;WriteBehindConfiguration&lt;/code&gt;注册&lt;code&gt;WriteBehindDecoratorLoaderWriterProvider&lt;/code&gt;服务到缓存。&lt;br /&gt;
+（3）构建一个事后写入模式的队列用于批量的跟新数据到底层资源。&lt;br /&gt;
+（4）设置队列的最大长度。&lt;br /&gt;
+（5）定义队列的并发程度。在一个时刻会有很多写入线程异步地跟新数据到底层资源。&lt;br /&gt;
+（6）开启写入时候的合并操作，这个可以确保只把对同一个key最近跟新写入到底层资源。&lt;/p&gt;
+
+&lt;h3 id=&#34;序列化器-serializers:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;序列化器（Serializers）&lt;/h3&gt;
+
+&lt;p&gt;序列化主要用于Ehcache把数据存储到非堆内存。所以不管用户使用几级缓存，在不同级之间转移数据的时候都有可能发生序列化和反序列化。&lt;br /&gt;
+Ehcache提供默认的序列化器可以序列化任何&lt;code&gt;Serializable&lt;/code&gt;类型。&lt;br /&gt;
+所以当你的key或者value使用标准的&lt;code&gt;Serializable&lt;/code&gt;类型时，你不用配置额外的序列化器，应为内置的序列化器会处理这些。&lt;/p&gt;
+
+&lt;h3 id=&#34;定制的序列化器-custom-serializers:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;定制的序列化器（Custom serializers）&lt;/h3&gt;
+
+&lt;p&gt;你可以注册自己定制的序列化器到Cache manager中。&lt;br /&gt;
+如果你为一种给定的类型定制一个序列化器，那么在对这个给定的类型进行序列化/反序列化的时候都会使用这个定制的序列化器。&lt;/p&gt;
+
+&lt;p&gt;你也可以配置一个序列化器到Cache manager中，应用于所有的caches；&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheConfiguration&amp;lt;Long, String&amp;gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder
+        .newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).offheap(1, MemoryUnit.MB).build())
+    .buildConfig(Long.class, String.class);
+
+DefaultSerializationProviderConfiguration defaultSerializationProviderFactoryConfiguration =
+    new DefaultSerializationProviderConfiguration()
+        .addSerializerFor(String.class, StringSerializer.class);  （1）
+CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .withCache(&amp;quot;cache&amp;quot;, cacheConfiguration)
+    .using(defaultSerializationProviderFactoryConfiguration)   （2）
+    .build(true);
+
+Cache&amp;lt;Long, String&amp;gt; cache = cacheManager.getCache(&amp;quot;cache&amp;quot;, Long.class, String.class);
+
+cache.put(1L, &amp;quot;one&amp;quot;);
+assertThat(cache.get(1L), equalTo(&amp;quot;one&amp;quot;));
+
+cacheManager.close();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）配置一个全局的序列化器集合。每一个序列化器都和一种类型对应，这个Cache定义的Key和Value类型用于从这个集合中选择最佳的序列化器。每一个Cache在初始化的时候都会为Key和Value选择一个序列化器。如果没有找到也不会抛出错误。序列化器的选择有两个准则：a.优先使用问这个类型明确配置的序列化器 b.否则使用从list中找到的第一个类型兼容的序列化器。默认情况下，针对&lt;code&gt;java.io.Serializable.&lt;/code&gt;类型已经配置了一个序列化器。&lt;br /&gt;
+（2）不要忘记把定制的序列化器配置到&lt;code&gt;CacheManagerBuilder&lt;/code&gt;中。&lt;/p&gt;
+
+&lt;p&gt;或者你也可以直接给一个Cache指定一个序列化器：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheConfiguration&amp;lt;Long, String&amp;gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .add(new DefaultSerializerConfiguration&amp;lt;Long&amp;gt;(LongSerializer.class,
+        SerializerConfiguration.Type.KEY))   （1）
+    .add(new DefaultSerializerConfiguration&amp;lt;CharSequence&amp;gt;(CharSequenceSerializer.class,
+        SerializerConfiguration.Type.VALUE))  （2）
+    .buildConfig(Long.class, String.class);
+
+CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .withCache(&amp;quot;cache&amp;quot;, cacheConfiguration)
+    .build(true);
+
+Cache&amp;lt;Long, String&amp;gt; cache = cacheManager.getCache(&amp;quot;cache&amp;quot;, Long.class, String.class);
+
+cache.put(1L, &amp;quot;one&amp;quot;);
+assertThat(cache.get(1L), equalTo(&amp;quot;one&amp;quot;));
+
+cacheManager.close();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）配置key的序列化器&lt;br /&gt;
+（2）配置value的序列化器&lt;/p&gt;
+
+&lt;p&gt;每一个Cache的Kye和value都会单独的创建序列化对象。也即，就算你为多个Cache配置了相同的序列化器，每一个Cache还是会单独创建一个序列化器对象。&lt;br /&gt;
+在Cache manager这一层配置的序列化器也是一样。&lt;br /&gt;
+同样的，就算是同一个Cache，你为Key和Value配置了相同的序列化器，也会创建不同的序列化器对象。&lt;/p&gt;
+
+&lt;h5 id=&#34;序列化器的实现:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;序列化器的实现：&lt;/h5&gt;
+
+&lt;p&gt;在实现一个&lt;code&gt;org.ehcache.spi.serialization.Serializer&lt;/code&gt;的时候，显然你必须遵守接口约定。&lt;br /&gt;
+此外，如果你使用Ehcache提供的&lt;code&gt;DefaultSerializationProvider&lt;/code&gt;服务，大部分用户都会这么干，除非他们自己实现&lt;code&gt;SerializationProvider&lt;/code&gt;服务，下面有些隐性的约定：&lt;br /&gt;
+* 用于短暂缓存（transient caches）的序列化器的实现必须有一个以&lt;code&gt;ClassLoader&lt;/code&gt;为参数的 &lt;code&gt;public&lt;/code&gt;构造方法.
+* 用于持久化缓存（persistent caches）的序列化器的实现必须有一个两参数的构造方法，一个参数是&lt;code&gt;ClassLoader&lt;/code&gt;，另一个参数是&lt;code&gt;FileBasedPersistenceContext&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;你可以随意的再写很多构造方法，但是Ehcache只会用上面的两个构造方法初始化他们的序列化器。短暂缓存（transient caches）会使用只有一个参数的构造方法，持久化缓存（persistent caches）会使用有两个参数的构造方法。尽管用户被强制在他们的序列化器的实现上有其中一个或两个方法，这些参数的用法还是取决于用户。用户可以选择完全忽略这些参数，但是这两个构造方法必须存在。现在，即使构造方法参数的用法没有强制指定，但是还是强烈推荐使用&lt;code&gt;FileBasedPersistenceContext&lt;/code&gt;持久化序列化器的状态，如果有的话。&lt;/p&gt;
+
+&lt;h3 id=&#34;用copiers实现值存储-store-by-value-的cache:93ef77c13d8af1a8fd2b0531f9d2770e&#34;&gt;用copiers实现值存储（Store-By-Value）的Cache&lt;/h3&gt;
+
+&lt;p&gt;JSR-107规定Cache应该支持值存储（Store-By-Value）机制也就是Cache中存储key和value的一份新的值拷贝。Ehcache在使用堆内存的时候默认支持引用存储（store-by-reference），用户要想使用值存储（Store-By-Value）机制必须显示的配置。&lt;/p&gt;
+
+&lt;p&gt;在对key和value进行复制操作的时候，用户可以指定习惯的复制逻辑（custom copy logic ）。&lt;br /&gt;
+如果用户对读写有不同的需求可以通过直接实现&lt;code&gt;Copier&amp;lt;T&amp;gt;&lt;/code&gt;接口创建一个copier。&lt;br /&gt;
+另一个选择是继承抽象的helper类&lt;code&gt;ReadWriteCopier&amp;lt;T&amp;gt;&lt;/code&gt;，它有一个抽象方法&lt;code&gt;copy(T obj)&lt;/code&gt;会被现&lt;code&gt;Copier&amp;lt;T&amp;gt;&lt;/code&gt;的方法调用。&lt;br /&gt;
+如果没有提供任何的copiers，这个Cache就会是一个引用存储（store-by-reference）的缓存。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheConfiguration&amp;lt;Description, Person&amp;gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .add(new DefaultCopierConfiguration&amp;lt;Description&amp;gt;(DescriptionCopier.class,
+        CopierConfiguration.Type.KEY))  （1）
+    .add(new DefaultCopierConfiguration&amp;lt;Person&amp;gt;(PersonCopier.class,
+        CopierConfiguration.Type.VALUE))  （2）
+    .buildConfig(Description.class, Person.class);
+
+CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .withCache(&amp;quot;cache&amp;quot;, cacheConfiguration)
+    .build(true);
+
+Cache&amp;lt;Description, Person&amp;gt; cache = cacheManager.getCache(&amp;quot;cache&amp;quot;, Description.class, Person.class);
+
+Description desc = new Description(1234, &amp;quot;foo&amp;quot;);
+Person person = new Person(&amp;quot;Bar&amp;quot;, 24);
+cache.put(desc, person);
+assertThat(cache.get(desc), equalTo(person));
+
+cacheManager.close();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）配置key的copier&lt;br /&gt;
+（2）配置value的coiper&lt;/p&gt;
+
+&lt;p&gt;如果用户不想自己实现一个coiper但是却想用值存储（store-by-value）模式，Ehcache提供了一个&lt;code&gt;SerializingCopier&lt;/code&gt;用户可以直接使用。&lt;code&gt;SerializingCopier&lt;/code&gt;内部用序列化的方式实现拷贝。为了进行序列化，你必须给key和value配置序列化器。可以按照下面的方式用&lt;code&gt;SerializingCopier&lt;/code&gt;配置Cache：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheConfiguration&amp;lt;Long, Person&amp;gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .add(new DefaultCopierConfiguration&amp;lt;Person&amp;gt;((Class)SerializingCopier.class,  （1）   
+        CopierConfiguration.Type.VALUE))
+    .buildConfig(Long.class, Person.class);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）你所需要做的就是像配置你自己实现的coiper一样使用&lt;code&gt;SerializingCopier&lt;/code&gt;，就这么简单。&lt;/p&gt;
+
+&lt;p&gt;看完上面几个例子你会发现我们都没有为key配置copiers,这个对于Ehcache是没什么问题的。如果没有配置coiper，我们会切回到使用引用存储（store-by-reference）模式。所以铜鼓上面的配置，你得到的Cache的key是引用存储，value是值存储。&lt;/p&gt;
+
+&lt;p&gt;你也可以在Cache manager这一层配置默认的copiers，这样你就不用每次创建Cache的时候，都配置一次copier。你可以通过下面的方式配置：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheConfiguration&amp;lt;Description, Person&amp;gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .buildConfig(Description.class, Person.class);
+
+CacheConfiguration&amp;lt;Long, Person&amp;gt; anotherCacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .buildConfig(Long.class, Person.class);
+
+DefaultCopyProviderConfiguration defaultCopierConfig = new DefaultCopyProviderConfiguration()
+    .addCopierFor(Description.class, DescriptionCopier.class)   （1）
+    .addCopierFor(Person.class, (Class) SerializingCopier.class);
+
+CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+    .using(defaultCopierConfig)   （2）
+    .withCache(&amp;quot;cache&amp;quot;, cacheConfiguration)   （3）
+    .withCache(&amp;quot;anotherCache&amp;quot;, anotherCacheConfiguration)   （4）
+    .build(true);
+
+Cache&amp;lt;Description, Person&amp;gt; cache = cacheManager.getCache(&amp;quot;cache&amp;quot;, Description.class, Person.class);
+Cache&amp;lt;Long, Person&amp;gt; anotherCache = cacheManager.getCache(&amp;quot;anotherCache&amp;quot;, Long.class, Person.class);
+
+Description desc = new Description(1234, &amp;quot;foo&amp;quot;);
+Person person = new Person(&amp;quot;Bar&amp;quot;, 24);
+cache.put(desc, person);
+assertThat(cache.get(desc), equalTo(person));
+
+anotherCache.put(1l, person);
+assertThat(anotherCache.get(1l), equalTo(person));
+
+cacheManager.close();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）创建一个&lt;code&gt;DefaultCopyProviderConfiguration&lt;/code&gt;然后增加所需的默认copiers.&lt;br /&gt;
+ （2）在&lt;code&gt;CacheManagerBuilder&lt;/code&gt;中使用相同的配置&lt;br /&gt;
+ （3）在Cache manager层配置的&lt;code&gt;DescriptionCopier&lt;/code&gt;和&lt;code&gt;PersonCopier&lt;/code&gt;将会作用于这个Cache。&lt;br /&gt;
+ （4）在Cache manager层配置的&lt;code&gt;PersonCopier&lt;/code&gt;将会作用于这个Cache。&lt;/p&gt;
+
+&lt;p&gt;上面的例子示范了如何在Cache manager层和Cache层配置不同服务。&lt;br /&gt;
+ 这些例子没有一个是真正的创建copiers实例，序列化器实例等。我们提供的这些用于配置服务的class类型和它们的实例化都是Ehcache内部完成的。&lt;/p&gt;
+
+&lt;p&gt;下面是一个示范配置copier服务例子。其他的服务也可以用类似的方式配置：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt; CacheConfiguration&amp;lt;Description, Person&amp;gt; cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder()
+    .withResourcePools(ResourcePoolsBuilder.newResourcePoolsBuilder().heap(10, EntryUnit.ENTRIES).build())
+    .add(new DefaultCopierConfiguration&amp;lt;Description&amp;gt;(DescriptionCopier.class,  （1）
+        CopierConfiguration.Type.KEY))
+    .add(new DefaultCopierConfiguration&amp;lt;Person&amp;gt;(new PersonCopier(),  （2）
+        CopierConfiguration.Type.VALUE))
+    .buildConfig(Description.class, Person.class);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）用class类型配置&lt;code&gt;DescriptionCopier&lt;/code&gt;copier（老的方式）
+ （2）用实际的对象配置copier：&lt;code&gt;PersonCopier&lt;/code&gt;在这里进行实例化。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;我们还是推荐用前面介绍的用class类型配置服务，因为这个可以确保不同的Cache是使用服务的不同对象。如果你不是足够细心的话，在你的应用中共享服务对象可能会带来致命的影响。后面一种方式，用服务的对象配置服务就是为共享同一个服务对象打开了一扇门，&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;现在你应该熟悉了如何用实际的对象或者class类型配置服务，比如loader-writers，序列化器等等。在Cache不再使用这些服务对象的时候，把他们清理调是一个很明智做法。你可以通过让这些类&lt;code&gt;Closeable&lt;/code&gt;，然后在close方法中释放掉资源做到。Ehcache会确保在这个Cache被删除或者Cache manager被关闭的时候调用close方法。&lt;/p&gt;
+
+&lt;p&gt;### 没有一些XML文件怎么能叫java&lt;/p&gt;
+
+&lt;p&gt;你可以通过XML文件的方式配置&lt;code&gt;CacheManager&lt;/code&gt; ：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;  &amp;lt;cache alias=&amp;quot;foo&amp;quot;&amp;gt;  （1）
+    &amp;lt;key-type&amp;gt;java.lang.String&amp;lt;/key-type&amp;gt;  （2）
+    &amp;lt;resources&amp;gt;
+      &amp;lt;heap size=&amp;quot;2000&amp;quot; unit=&amp;quot;entries&amp;quot;/&amp;gt;  （3）
+      &amp;lt;offheap size=&amp;quot;500&amp;quot; unit=&amp;quot;mb&amp;quot;/&amp;gt;   （4）
+    &amp;lt;/resources&amp;gt;
+  &amp;lt;/cache&amp;gt;
+
+  &amp;lt;cache-template name=&amp;quot;myDefaults&amp;quot;&amp;gt;   （5）
+    &amp;lt;key-type&amp;gt;java.lang.Long&amp;lt;/key-type&amp;gt;
+    &amp;lt;value-type&amp;gt;java.lang.String&amp;lt;/value-type&amp;gt;
+    &amp;lt;heap size=&amp;quot;200&amp;quot; unit=&amp;quot;entries&amp;quot;/&amp;gt;
+  &amp;lt;/cache-template&amp;gt;
+
+  &amp;lt;cache alias=&amp;quot;bar&amp;quot; uses-template=&amp;quot;myDefaults&amp;quot;&amp;gt;   （6）
+    &amp;lt;key-type&amp;gt;java.lang.Number&amp;lt;/key-type&amp;gt;
+  &amp;lt;/cache&amp;gt;
+
+  &amp;lt;cache alias=&amp;quot;simpleCache&amp;quot; uses-template=&amp;quot;myDefaults&amp;quot; /&amp;gt;  （7）
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）定义一个&lt;code&gt;Cache&lt;/code&gt;的别名叫&lt;code&gt;foo&lt;/code&gt;&lt;br /&gt;
+ （2）&lt;code&gt;foo&lt;/code&gt;的key被定义为&lt;code&gt;String&lt;/code&gt;类型；由于没有定义value的类型，value的类型默认为&lt;code&gt;Object&lt;/code&gt;。&lt;br /&gt;
+ （3）&lt;code&gt;foo&lt;/code&gt;被定义为最多存储2000个entry在堆内存里&lt;br /&gt;
+ （4）&lt;code&gt;foo&lt;/code&gt;被定义为在它开始丢弃entry之前，最多能在非堆内存里占有500Mb。&lt;br /&gt;
+ （5）&lt;code&gt;&amp;lt;cache-template&amp;gt;&lt;/code&gt;元素可以让你创建一个抽象的配置，然后可以被后面的&lt;code&gt;&amp;lt;cache&amp;gt;&lt;/code&gt;可以继承.&lt;br /&gt;
+ （6）&lt;code&gt;bar&lt;/code&gt;就是一个Cache，它使用一个叫做&lt;code&gt;myDefaults&lt;/code&gt;的&lt;code&gt;&amp;lt;cache-template&amp;gt;&lt;/code&gt;,并且覆盖他的&lt;code&gt;key-type&lt;/code&gt;定义。&lt;br /&gt;
+ （7）&lt;code&gt;simpleCache&lt;/code&gt;是另外一个Cache。它直接使用&lt;code&gt;myDefaults&lt;/code&gt;的配置作为它所有的配置。&lt;/p&gt;
+
+&lt;p&gt;如果想了解更多的XML配置格式，你可以参考&lt;a href=&#34;ehcache_xml_config.md&#34;&gt;xml配置文档&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;为了解析XML配置，你可以使用&lt;code&gt;XmlConfiguration&lt;/code&gt;类型：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;final URL myUrl = this.getClass().getResource(&amp;quot;/my-config.xml&amp;quot;);  （1）
+Configuration xmlConfig = new XmlConfiguration(myUrl);  （2）
+CacheManager myCacheManager = CacheManagerBuilder.newCacheManager(xmlConfig);  （3）
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）获取你的XML文件的URL&lt;br /&gt;
+（2）传入XML文件的url，实例化一个&lt;code&gt;XmlConfiguration&lt;/code&gt;&lt;br /&gt;
+（3）使用&lt;code&gt;org.ehcache.CacheManagerBuilder.newCacheManager(org.ehcache.config.Configuration)&lt;/code&gt;可以让你使用&lt;code&gt;XmlConfiguration&lt;/code&gt;中的配置实例化一个&lt;code&gt;CacheManager&lt;/code&gt;对象。&lt;/p&gt;
+
+&lt;p&gt;# 目前的开发情况
+ 如果想获得开发者信息，你可以访问&lt;a href=&#34;https://github.com/ehcache/ehcache3/wiki&#34;&gt;Ehcache3.0项目GitHub的wiki&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ehcache--XML Configuration</title>
+      <link>http://blues-harp.github.io/post/ehcache_xml_config/</link>
+      <pubDate>Thu, 17 Mar 2016 20:23:41 +0800</pubDate>
+      
+      <guid>http://blues-harp.github.io/post/ehcache_xml_config/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;http://www.ehcache.org/documentation/3.0/xml.html&#34;&gt;原文网址&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;xml-configuration:03215b5a38dc4db8ca4b6327a662a0e5&#34;&gt;XML Configuration&lt;/h1&gt;
+
+&lt;h2 id=&#34;介绍:03215b5a38dc4db8ca4b6327a662a0e5&#34;&gt;介绍&lt;/h2&gt;
+
+&lt;p&gt;使用XML文件你可以在创建&lt;code&gt;CacheManeger&lt;/code&gt;的时候进行配置，根据一个&lt;a href=&#34;configuration_xsd.md&#34;&gt;XSD文件&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h3 id=&#34;config-根元素:03215b5a38dc4db8ca4b6327a662a0e5&#34;&gt;&lt;code&gt;&amp;lt;config&amp;gt;&lt;/code&gt;根元素&lt;/h3&gt;
+
+&lt;p&gt;我们XML文件的根元素。在一个XML文件里，只能有一个 &lt;code&gt;&amp;lt;config&amp;gt;&lt;/code&gt;元素定义一个&lt;code&gt;CacheManager&lt;/code&gt;。然而，使用Ehcache3.0的时候你可能想用一个XML配置文件创建多种&lt;code&gt;CacheManager&lt;/code&gt;实例。与JSR-107&lt;code&gt;javax.cache.spi.CachingProvider&lt;/code&gt;不同，Ehcache并不保存CacheManager实例的注册信息。&lt;/p&gt;
+
+&lt;h3 id=&#34;service-元素:03215b5a38dc4db8ca4b6327a662a0e5&#34;&gt;&lt;code&gt;&amp;lt;service&amp;gt;&lt;/code&gt;元素&lt;/h3&gt;
+
+&lt;p&gt;目前并不提供内建的服务。&lt;code&gt;&amp;lt;service&amp;gt;&lt;/code&gt;元素是一个扩展点，用于指明CacheManeger管理的服务。每个这种方式定义的服务和CacheManeger有着一样的生命周期&amp;ndash;对于每个为CacheManager定义的服务，&lt;code&gt;Service.start&lt;/code&gt;方法会在&lt;code&gt;CacheManager.init&lt;/code&gt;执行的时候调用；&lt;code&gt;Service.stop&lt;/code&gt;方法会在&lt;code&gt;CacheManager.stop&lt;/code&gt;执行的时候调用。&lt;/p&gt;
+
+&lt;p&gt;然后这些&lt;code&gt;Service&lt;/code&gt;就可以被这个&lt;code&gt;CacheManeger&lt;/code&gt;管理的&lt;code&gt;Cache&lt;/code&gt;实例调用了。就像&lt;a href=&#34;javaxcache_aka_jsr-107.md&#34;&gt;JSR-107配置部分&lt;/a&gt;解释的那样，JSR-107使用XML文件配置的这些扩展点（还有Ehcache的模块结构）。&lt;/p&gt;
+
+&lt;h3 id=&#34;default-serializers-元素:03215b5a38dc4db8ca4b6327a662a0e5&#34;&gt;&lt;code&gt;&amp;lt;default-serializers&amp;gt;&lt;/code&gt;元素&lt;/h3&gt;
+
+&lt;p&gt;一个&lt;code&gt;&amp;lt;default-serializers&amp;gt;&lt;/code&gt;元素表示配置在CacheManager层级的&lt;code&gt;Serializers&lt;/code&gt;。它是一个&lt;code&gt;serializer&lt;/code&gt;标签的集合，每个&lt;code&gt;serializer&lt;/code&gt;需要配置一个&lt;code&gt;type&lt;/code&gt;和类的全名。&lt;/p&gt;
+
+&lt;h3 id=&#34;default-copiers-元素:03215b5a38dc4db8ca4b6327a662a0e5&#34;&gt;&lt;code&gt;&amp;lt;default-copiers&amp;gt;&lt;/code&gt;元素&lt;/h3&gt;
+
+&lt;p&gt;一个&lt;code&gt;&amp;lt;default-copiers&amp;gt;&lt;/code&gt;元素表示配置在CacheManager层级的&lt;code&gt;Copiers&lt;/code&gt;。它是一个&lt;code&gt;Copier&lt;/code&gt;标签的集合，每个&lt;code&gt;Copier&lt;/code&gt;需要配置一个&lt;code&gt;type&lt;/code&gt;和类的全名。&lt;/p&gt;
+
+&lt;h3 id=&#34;persistence-元素:03215b5a38dc4db8ca4b6327a662a0e5&#34;&gt;&lt;code&gt;&amp;lt;persistence&amp;gt;&lt;/code&gt;元素&lt;/h3&gt;
+
+&lt;p&gt;一个&lt;code&gt;&amp;lt;persistence&amp;gt;&lt;/code&gt;元素表示一个&lt;code&gt;Persistence&lt;/code&gt;，在创建一个&lt;code&gt;PersistentCacheManager&lt;/code&gt;的时候会用到。它需要配置一个持久化数据到磁盘的 &lt;code&gt;directory&lt;/code&gt;位置。&lt;/p&gt;
+
+&lt;h3 id=&#34;cache-元素:03215b5a38dc4db8ca4b6327a662a0e5&#34;&gt;&lt;code&gt;&amp;lt;cache&amp;gt;&lt;/code&gt;元素&lt;/h3&gt;
+
+&lt;p&gt;一个&lt;code&gt;&amp;lt;cache&amp;gt;&lt;/code&gt;元素表示一个Cache实例，这个实例会由&lt;code&gt;CacheManager&lt;/code&gt;创建和管理。每一个&lt;code&gt;&amp;lt;cache&amp;gt;&lt;/code&gt;需要一个&lt;code&gt;&amp;lt;alias&amp;gt;&lt;/code&gt;属性，用于在运行时通过&lt;code&gt;org.ehcache.CacheManager.getCache(String, Class&amp;lt;K&amp;gt;, Class&amp;lt;V&amp;gt;)&lt;/code&gt;方法获取相应的&lt;code&gt;Cache&amp;lt;K, V&amp;gt;&lt;/code&gt;实例。可选的&lt;code&gt;uses-template&lt;/code&gt;属性让你引用一个&lt;code&gt;&amp;lt;cache-template&amp;gt;&lt;/code&gt;元素的&lt;code&gt;name&lt;/code&gt;属性。如果想了解详细的配置可以参考下面 &lt;code&gt;cache-template&lt;/code&gt; 部分。&lt;/p&gt;
+
+&lt;p&gt;可选的子元素：
+1. &lt;code&gt;&amp;lt;key-type&amp;gt;&lt;/code&gt;: 这个&lt;code&gt;Cache&amp;lt;K, V&amp;gt;&lt;/code&gt;的key的类全名（FQCN）;默认是&lt;code&gt;java.lang.Object&lt;/code&gt;
+2. &lt;code&gt;&amp;lt;value-type&amp;gt;&lt;/code&gt;：这个&lt;code&gt;Cache&amp;lt;K, V&amp;gt;&lt;/code&gt;value的类全名（FQCN）;默认是&lt;code&gt;java.lang.Object&lt;/code&gt;
+3. &lt;code&gt;&amp;lt;expiry&amp;gt;&lt;/code&gt;：控制过期类型和它的参数
+4. &lt;code&gt;&amp;lt;eviction-veto&amp;gt;&lt;/code&gt;: &lt;code&gt;org.ehcache.config.EvictionVeto&amp;lt;K, V&amp;gt;&lt;/code&gt;的实现的类全名，默认是&lt;code&gt;null&lt;/code&gt;
+5. &lt;code&gt;&amp;lt;eviction-prioritizer&amp;gt;&lt;/code&gt;: &lt;code&gt;org.ehcache.config.EvictionPrioritizer&amp;lt;K, V&amp;gt;&lt;/code&gt;的实现的类全名，默认是&lt;code&gt;null&lt;/code&gt;
+6. &lt;code&gt;&amp;lt;integration&amp;gt;&lt;/code&gt;： 为一个cache-throuth模式配置一个&lt;code&gt;CacheLoaderWriter&lt;/code&gt;
+7. &lt;code&gt;&amp;lt;resources&amp;gt;&lt;/code&gt;：配置不同层的容量。如果只使用堆内存，你可以直接使用&lt;heap&gt;元素代替它。&lt;/p&gt;
+
+&lt;h3 id=&#34;cache-template-元素:03215b5a38dc4db8ca4b6327a662a0e5&#34;&gt;&lt;code&gt;&amp;lt;cache-template&amp;gt;&lt;/code&gt;元素&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;&amp;lt;cache-template&amp;gt;&lt;/code&gt;元素表示一个被命名的（通过设置必须配置的&lt;code&gt;name&lt;/code&gt;属性）模板，可以被&lt;code&gt;&amp;lt;cache&amp;gt;&lt;/code&gt;元素继承。一个&lt;code&gt;&amp;lt;cache&amp;gt;&lt;/code&gt;元素通过&lt;code&gt;&amp;lt;uses-template&lt;/code&gt;属性指定一个&lt;code&gt;name&lt;/code&gt;引用一个模板&lt;code&gt;&amp;lt;cache-template&amp;gt;&lt;/code&gt;，然后就可以继承&lt;code&gt;&amp;lt;cache-template&amp;gt;&lt;/code&gt;的所有属性。&lt;code&gt;&amp;lt;cache&amp;gt;&lt;/code&gt;也可以根据需要覆盖这些属性。一个 &lt;code&gt;&amp;lt;cache-template&amp;gt;&lt;/code&gt;元素甚至可以包含和一个&lt;code&gt;&amp;lt;cache&amp;gt;&lt;/code&gt;一样的所有元素。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;我们准备了一个完整配置的&lt;a href=&#34;java_examples.md&#34;&gt;样例&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;xml程序化解析:03215b5a38dc4db8ca4b6327a662a0e5&#34;&gt;XML程序化解析&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;如果你想通过JSR-107 API获取你的&lt;code&gt;CacheManeger&lt;/code&gt;,当你调用&lt;code&gt;javax.cache.spi.CachingProvider.getCacheManager(java.net.URI, java.lang.ClassLoader).&lt;/code&gt;方法时，会自动执行下面的代码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;final URL myUrl = this.getClass().getResource(&amp;quot;/my-config.xml&amp;quot;); （1）
+XmlConfiguration xmlConfig = new XmlConfiguration(myUrl);  （2）
+CacheManager myCacheManager = CacheManagerBuilder.newCacheManager(xmlConfig); （3）
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）获取一个指向XML文件的URL&lt;br /&gt;
+（2）传入这个XML文件的ULR实例化一个&lt;code&gt;XmlConfiguration&lt;/code&gt;&lt;br /&gt;
+（3）静态方法&lt;code&gt;org.ehcache.CacheManagerBuilder.newCacheManager(org.ehcache.config.Configuration)&lt;/code&gt;可以让你使用&lt;code&gt;XmlConfiguration&lt;/code&gt;中的配置创建一个&lt;code&gt;CacheManager&lt;/code&gt;对象。&lt;/p&gt;
+
+&lt;p&gt;我们也可以使用XML文件中定义的&lt;code&gt;&amp;lt;cache-template&amp;gt;&lt;/code&gt;生成一个&lt;code&gt;CacheConfigurationBuilder&lt;/code&gt;对象。假如一个配置文件中包含下面的XML段：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;ehcache:cache-template name=&amp;quot;example&amp;quot;&amp;gt;
+  &amp;lt;ehcache:capacity&amp;gt;120&amp;lt;/ehcache:capacity&amp;gt;
+&amp;lt;/ehcache:cache-template&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们可以使用下面的代码创建一个基于&lt;code&gt;example&lt;/code&gt;的&lt;code&gt;CacheConfigurationBuilder&lt;/code&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;CacheConfigurationBuilder&amp;lt;String, Object&amp;gt; cacheBuilder = xmlConfig.newCacheConfigurationBuilderFromTemplate(&amp;quot;example&amp;quot;, String.class, Object.class);  （1）
+cacheBuilder.capacityConstraint(100L);  （2）
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;（1）创建一个builder，继承容量限制最多可以存120个entry，指定key的类型是&lt;code&gt;java.lang.string&lt;/code&gt;&lt;br /&gt;
+（2）要想覆盖继承的这个属性很简单，只需要在创建&lt;code&gt;CacheConfiguration&lt;/code&gt;之前设置下这个属性就可以覆盖。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
