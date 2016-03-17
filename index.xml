@@ -6,11 +6,35 @@
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Mar 2016 21:47:24 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 17 Mar 2016 13:40:43 +0800</lastBuildDate>
     <atom:link href="http://blues-harp.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>first</title>
+      <title>second</title>
+      <link>http://blues-harp.github.io/second/</link>
+      <pubDate>Thu, 17 Mar 2016 13:40:43 +0800</pubDate>
+      
+      <guid>http://blues-harp.github.io/second/</guid>
+      <description>
+
+&lt;h1 id=&#34;第二篇博客:9f7936f9b5c071ae81db818b80a44a0d&#34;&gt;第二篇博客&lt;/h1&gt;
+
+&lt;h3 id=&#34;目录1:9f7936f9b5c071ae81db818b80a44a0d&#34;&gt;目录1&lt;/h3&gt;
+
+&lt;p&gt;这是我的第二篇博客&lt;/p&gt;
+
+&lt;h3 id=&#34;目录2:9f7936f9b5c071ae81db818b80a44a0d&#34;&gt;目录2&lt;/h3&gt;
+
+&lt;p&gt;这是我的第二篇博客
+这是我的第二篇博客
+这是我的第二篇博客这是我的第二篇博客&lt;/p&gt;
+
+&lt;h3 id=&#34;目录3:9f7936f9b5c071ae81db818b80a44a0d&#34;&gt;目录3&lt;/h3&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>My First Blog</title>
       <link>http://blues-harp.github.io/post/first/</link>
       <pubDate>Wed, 16 Mar 2016 21:47:24 +0800</pubDate>
       
@@ -23,111 +47,6 @@
 bb
 cc
 sadg&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;我们理解您需要更便捷更高效的工具记录思想，整理笔记、知识，并将其中承载的价值传播给他人，&lt;strong&gt;Cmd Markdown&lt;/strong&gt; 是我们给出的答案 —— 我们为记录思想和分享知识提供更专业的工具。 您可以使用 Cmd Markdown：&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;整理知识，学习笔记&lt;/li&gt;
-&lt;li&gt;发布日记，杂文，所见所想&lt;/li&gt;
-&lt;li&gt;撰写发布技术文稿（代码支持）&lt;/li&gt;
-&lt;li&gt;撰写发布学术论文（LaTeX 公式支持）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://www.zybuluo.com/static/img/logo.png&#34; alt=&#34;cmd-markdown-logo&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;除了您现在看到的这个 Cmd Markdown 在线版本，您还可以前往以下网址下载：&lt;/p&gt;
-
-&lt;h3 id=&#34;windows-mac-linux-全平台客户端-https-www-zybuluo-com-cmd:e8fb9c67eba912c72729806db31eaa1b&#34;&gt;&lt;a href=&#34;https://www.zybuluo.com/cmd/&#34;&gt;Windows/Mac/Linux 全平台客户端&lt;/a&gt;&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;请保留此份 Cmd Markdown 的欢迎稿兼使用说明，如需撰写新稿件，点击顶部工具栏右侧的 &lt;i class=&#34;icon-file&#34;&gt;&lt;/i&gt; &lt;strong&gt;新文稿&lt;/strong&gt; 或者使用快捷键 &lt;code&gt;Ctrl+Alt+N&lt;/code&gt;。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&#34;什么是-markdown:e8fb9c67eba912c72729806db31eaa1b&#34;&gt;什么是 Markdown&lt;/h2&gt;
-
-&lt;p&gt;Markdown 是一种方便记忆、书写的纯文本标记语言，用户可以使用这些标记符号以最小的输入代价生成极富表现力的文档：譬如您正在阅读的这份文档。它使用简单的符号标记不同的标题，分割不同的段落，&lt;strong&gt;粗体&lt;/strong&gt; 或者 &lt;em&gt;斜体&lt;/em&gt; 某些文字，更棒的是，它还可以&lt;/p&gt;
-
-&lt;h3 id=&#34;1-制作一份待办事宜-todo-列表-https-www-zybuluo-com-mdeditor-url-https-www-zybuluo-com-static-editor-md-help-markdown-13-待办事宜-todo-列表:e8fb9c67eba912c72729806db31eaa1b&#34;&gt;1. 制作一份待办事宜 &lt;a href=&#34;https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown#13-待办事宜-todo-列表&#34;&gt;Todo 列表&lt;/a&gt;&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;[ ] 支持以 PDF 格式导出文稿&lt;/li&gt;
-&lt;li&gt;[ ] 改进 Cmd 渲染算法，使用局部渲染技术提高渲染效率&lt;/li&gt;
-&lt;li&gt;[x] 新增 Todo 列表功能&lt;/li&gt;
-&lt;li&gt;[x] 修复 LaTex 公式渲染问题&lt;/li&gt;
-&lt;li&gt;[x] 新增 LaTex 公式编号功能&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;2-书写一个质能守恒公式-latex:e8fb9c67eba912c72729806db31eaa1b&#34;&gt;2. 书写一个质能守恒公式[^LaTeX]&lt;/h3&gt;
-
-&lt;p&gt;$$E=mc^2$$&lt;/p&gt;
-
-&lt;h3 id=&#34;3-高亮一段代码-code:e8fb9c67eba912c72729806db31eaa1b&#34;&gt;3. 高亮一段代码[^code]&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;@requires_authorization
-class SomeClass:
-    pass
-
-if __name__ == &#39;__main__&#39;:
-    # A comment
-    print &#39;hello world&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;4-高效绘制-流程图-https-www-zybuluo-com-mdeditor-url-https-www-zybuluo-com-static-editor-md-help-markdown-7-流程图:e8fb9c67eba912c72729806db31eaa1b&#34;&gt;4. 高效绘制 &lt;a href=&#34;https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown#7-流程图&#34;&gt;流程图&lt;/a&gt;&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-flow&#34;&gt;st=&amp;gt;start: Start
-op=&amp;gt;operation: Your Operation
-cond=&amp;gt;condition: Yes or No?
-e=&amp;gt;end
-
-st-&amp;gt;op-&amp;gt;cond
-cond(yes)-&amp;gt;e
-cond(no)-&amp;gt;op
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;5-高效绘制-序列图-https-www-zybuluo-com-mdeditor-url-https-www-zybuluo-com-static-editor-md-help-markdown-8-序列图:e8fb9c67eba912c72729806db31eaa1b&#34;&gt;5. 高效绘制 &lt;a href=&#34;https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown#8-序列图&#34;&gt;序列图&lt;/a&gt;&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-seq&#34;&gt;Alice-&amp;gt;Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob--&amp;gt;Alice: I am good thanks!
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;6-绘制表格:e8fb9c67eba912c72729806db31eaa1b&#34;&gt;6. 绘制表格&lt;/h3&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;项目&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;价格&lt;/th&gt;
-&lt;th align=&#34;center&#34;&gt;数量&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;计算机&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;\$1600&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;5&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;手机&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;\$12&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;12&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;管线&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;\$1&lt;/td&gt;
-&lt;td align=&#34;center&#34;&gt;234&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
 
 &lt;h3 id=&#34;7-更详细语法说明:e8fb9c67eba912c72729806db31eaa1b&#34;&gt;7. 更详细语法说明&lt;/h3&gt;
 </description>
